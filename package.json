@@ -1,0 +1,33 @@
+{
+  "name": "Datepickk",
+  "version": "1.0.0",
+  "description": "Flexbox/js datepicker",
+  "main": "gulpfile.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://crsten@bitbucket.org/crsten/datepickk.git"
+  },
+  "keywords": [
+    "datepicker",
+    "js",
+    "flexbox"
+  ],
+  "author": "Carsten Jacobsen",
+  "license": "ISC",
+  "dependencies": {
+    "fs": "0.0.2",
+    "gulp": "^3.9.0",
+    "gulp-autoprefixer": "^2.3.1",
+    "gulp-less": "^3.0.3",
+    "gulp-minify-css": "^1.2.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-sourcemaps": "^1.5.2",
+    "gulp-uglify": "^1.2.0"
+  }
+}

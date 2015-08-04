@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Datepickk</title>
-	<link rel="stylesheet" href="css/datepickk.min.css">
+	<link rel="stylesheet" href="dist/datepickk.min.css">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
 	<style>
 		body{
@@ -46,8 +46,8 @@
 		    background-color: #D3D3D3;
 		}
 	</style>
-	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/styles/zenburn.min.css">
-	<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/highlight.min.js"></script>
+	<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/styles/zenburn.min.css">
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/highlight.min.js"></script>
 </head>
 <body>
 <div id="calendarInline"></div>
@@ -57,8 +57,8 @@
 <button id="update">Update</button>
 <button onclick="toggle()" class="modal">Open calendar</button>
 
-	<script src="js/datepickk.js"></script>
-	<script src="js/fastclick.js"></script>
+	<script src="dist/datepickk.js"></script>
+	<script src="dist/fastclick.js"></script>
 	<script>
 	var currentYear = new Date().getFullYear();
 	window.datep = new Datepickk({
