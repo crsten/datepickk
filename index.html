@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Datepickk</title>
+	<link rel="stylesheet" href="css/datepickk.min.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+	<style>
+		body{
+			margin:0;
+			background-color:#eaeaea;
+		}
+		button.modal{
+			margin:auto;
+			border:none;
+			outline:none;
+			font-family: 'Raleway';
+			background-color: #00759c;
+			color:white;
+			display: block;
+			cursor:pointer;
+			font-size: 25px;
+			padding: 20px 40px;
+		}
+		#calendarInline{
+			width:90%;
+			max-width: 1200px;
+			height: 1100px;
+			margin:20px auto 20px auto;
+		}
+		code{
+			padding: 50px!important;
+			min-height: 100px;
+			outline: none;
+		}
+		#update{
+			border: none;
+		    width: 90%;
+		    max-width: 1000px;
+		    margin: 0 auto 20px auto;
+		    padding: 10px 0;
+		    display: block;
+		    cursor:pointer;
+		    outline: none;
+		    font-family: 'Raleway';
+		    background-color: #D3D3D3;
+		}
+	</style>
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/styles/zenburn.min.css">
+	<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/highlight.min.js"></script>
+</head>
+<body>
+<div id="calendarInline"></div>
+<pre>
+	<code contenteditable="true"></code>
+</pre>
+<button id="update">Update</button>
+<button onclick="toggle()" class="modal">Open calendar</button>
+
+	<script src="js/datepickk.js"></script>
+	<script src="js/fastclick.js"></script>
+	<script>
+	var currentYear = new Date().getFullYear();
+	window.datep = new Datepickk({
+			range: false,
+			lang: 'no',
+			fullscreen: false,
+			title: null,
+			button:'Bekreft',
+			months:1,
+			disabledDays: [],
+			disabledDates: [new Date(2015,6,20)],
+			onClose: function(){
+				console.log('onClose');
+			},
+			//minDate: new Date(2015,6,1),
+			//maxDate: new Date(2015,7,0),
+			closeOnClick: true,
+			onConfirm: function(){
+				var dates = this.selectedDates;
+				for(var i = 0; i < dates.length; i ++ ){
+					console.log(this.selectedDates[i].toLocaleDateString());
+				}
+			},
+			closeOnSelect: false,
+			today: true,
+			highlight: [],
+			onSelect: function(checked){
+				if(checked){
+					console.log(this.toLocaleDateString() + ' selected');
+				}else{
+					console.log(this.toLocaleDateString() + ' unselected');
+				}
+			},
+			highlight: [
+				{
+					start: new Date(currentYear,6,13),
+					end  : new Date(currentYear,6,19),
+					backgroundColor: '#222',
+					legend:'Ferie',
+					color: '#fff'
+				}
+			],
+			//locked: true,
+			tooltips: [
+				{
+					date: new Date(2015,4,12),
+					text: "Carsten's bursdag"
+				}
+			]
+	});
+	
+	window.datepicker = new Datepickk({
+		container:document.querySelector('#calendarInline'),
+		inline:true
+	});
+
+	function toggle(){
+		if(datep.opened){
+			datep.hide();
+		}else{
+			datep.show({
+				//startDate: new Date()
+			});
+		}
+	}
+	
+	hljs.initHighlightingOnLoad();
+
+	var retrievedObject = localStorage.getItem('datepickk-settings');
+
+	if(retrievedObject){
+		document.querySelector('code').innerText = retrievedObject;
+		eval(retrievedObject);
+	}
+
+	document.querySelector('#update').addEventListener('click',update);
+
+	document.querySelector('code').addEventListener('keydown',function(e){
+		if(e.ctrlKey && e.keyCode == 13){
+			update();
+		}
+	});
+
+	function update(){
+		var text = document.querySelector('code').innerText;
+		localStorage.setItem('datepickk-settings', text);
+		location.reload();
+	}
+	</script>
+</body>
+</html>
