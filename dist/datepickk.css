@@ -110,6 +110,22 @@
 #Datepickk.multi .d-legend {
   max-width: 800px;
 }
+#Datepickk.multi .d-table {
+  position: relative;
+  padding-top: 35px;
+}
+#Datepickk.multi .d-table:before {
+  content: attr(data-month);
+  text-align: right;
+  width: 100%;
+  font-size: 1em;
+  padding: 5px 10px 5px 0;
+  box-sizing: border-box;
+  color: #CCC;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
 #Datepickk.inline.show .d-calendar {
   -webkit-animation: none;
           animation: none;

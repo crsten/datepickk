@@ -196,6 +196,8 @@
 					startDay -= weekStart;
 				}
 
+				monthElements[p].setAttribute('data-month',languages[lang].monthNames[month-1+p]);
+
 				for(var i = 0;i < inputElements.length;i++){
 					inputElements[i].checked = false;
 					inputElements[i].removeAttribute('disabled');
