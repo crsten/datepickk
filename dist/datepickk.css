@@ -29,7 +29,7 @@
 #Datepickk.MSIE:not(.wrapped):not(.inline) .d-calendar {
   height: 560px;
 }
-#Datepickk.show .d-overlay {
+#Datepickk.d-show .d-overlay {
   -webkit-animation-name: show;
           animation-name: show;
   -webkit-animation-duration: .15s;
@@ -39,7 +39,7 @@
   -webkit-animation-fill-mode: both;
           animation-fill-mode: both;
 }
-#Datepickk.hide {
+#Datepickk.d-hide {
   -webkit-animation-name: hide;
           animation-name: hide;
   -webkit-animation-duration: .1s;
@@ -49,7 +49,7 @@
   -webkit-animation-fill-mode: both;
           animation-fill-mode: both;
 }
-#Datepickk.hide .d-overlay {
+#Datepickk.d-hide .d-overlay {
   -webkit-animation-name: show;
           animation-name: show;
   -webkit-animation-duration: .15s;
@@ -126,7 +126,7 @@
   left: 0;
   top: 0;
 }
-#Datepickk.inline.show .d-calendar {
+#Datepickk.inline.d-show .d-calendar {
   -webkit-animation: none;
           animation: none;
 }
@@ -336,7 +336,7 @@
   pointer-events: none;
   transition: height 0.2s cubic-bezier(0.18, 0.89, 0.32, 1.28);
 }
-#Datepickk .d-month-picker.show {
+#Datepickk .d-month-picker.d-show {
   height: 44px;
   opacity: 1;
   pointer-events: auto;
@@ -370,7 +370,7 @@
   pointer-events: none;
   transition: height 0.2s cubic-bezier(0.18, 0.89, 0.32, 1.28);
 }
-#Datepickk .d-year-picker.show {
+#Datepickk .d-year-picker.d-show {
   height: 44px;
   opacity: 1;
   pointer-events: auto;
@@ -767,7 +767,7 @@
   -webkit-animation-name: fadeInUp;
           animation-name: fadeInUp;
 }
-.show .d-calendar {
+.d-show .d-calendar {
   -webkit-animation-name: animJelly;
           animation-name: animJelly;
   -webkit-animation-duration: 1s;

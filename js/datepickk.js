@@ -505,11 +505,11 @@
 		function show(properties){
 			setArgs(properties);
 			var handler = function(){
-				that.el.classList.remove('show');
+				that.el.classList.remove('d-show');
 				that.el.calendar.removeEventListener(whichAnimationEvent(),handler);
 			};
 			that.el.calendar.addEventListener(whichAnimationEvent(),handler);
-			that.el.classList.add('show');
+			that.el.classList.add('d-show');
 			container.appendChild(that.el);
 			opened = true;
 			if(startDate){
@@ -520,39 +520,38 @@
 		};
 
 		function hide(){
-			that.el.classList.remove('show');
 			var handler = function(){
 				that.el.parentNode.removeChild(that.el);
 				opened = false;
-				that.el.classList.remove('hide');
+				that.el.classList.remove('d-hide');
 				if(typeof onClose == 'function'){
 					onClose.apply(that);
 				}
 				that.el.removeEventListener(whichAnimationEvent(),handler);
 			}
 			that.el.addEventListener(whichAnimationEvent(),handler);
-			that.el.classList.add('hide');
+			that.el.classList.add('d-hide');
 		};
 
 		function bindEvents(){
 			that.el.header.childNodes[0].addEventListener(eventName,prevMonth);
 			that.el.header.childNodes[2].addEventListener(eventName,nextMonth);
 			that.el.header.childNodes[1].childNodes[0].addEventListener(eventName,function(){
-				if(that.el.monthPicker.classList.contains('show')){
-					that.el.monthPicker.classList.remove('show');
+				if(that.el.monthPicker.classList.contains('d-show')){
+					that.el.monthPicker.classList.remove('d-show');
 				}else{
-					that.el.monthPicker.classList.add('show');
+					that.el.monthPicker.classList.add('d-show');
 				}
-				that.el.yearPicker.classList.remove('show');
+				that.el.yearPicker.classList.remove('d-show');
 			});
 			that.el.header.childNodes[1].childNodes[1].addEventListener(eventName,function(){
 				generateYears();
-				if(that.el.yearPicker.classList.contains('show')){
-					that.el.yearPicker.classList.remove('show');
+				if(that.el.yearPicker.classList.contains('d-show')){
+					that.el.yearPicker.classList.remove('d-show');
 				}else{
-					that.el.yearPicker.classList.add('show');
+					that.el.yearPicker.classList.add('d-show');
 				}
-				that.el.monthPicker.classList.remove('show');
+				that.el.monthPicker.classList.remove('d-show');
 			});
 			that.el.button.addEventListener(eventName,hide);
 
@@ -567,7 +566,7 @@
 				monthPickers[y].addEventListener(eventName,function(){
 					currentMonth = parseInt(this.getAttribute('data-month'));
 					setDate();
-					that.el.monthPicker.classList.remove('show');
+					that.el.monthPicker.classList.remove('d-show');
 				});
 			}
 
@@ -576,7 +575,7 @@
 				yearPickers[y].addEventListener(eventName,function(){
 					currentYear += parseInt(this.getAttribute('data-year'));
 					setDate();
-					that.el.yearPicker.classList.remove('show');
+					that.el.yearPicker.classList.remove('d-show');
 				});
 			}
 

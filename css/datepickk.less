@@ -27,7 +27,7 @@
     	height:560px;
     }
 
-    &.show{
+    &.d-show{
 		.d-overlay{
 			animation-name: show;
 			animation-duration: .15s;
@@ -36,7 +36,7 @@
 		}
 	}
 
-	&.hide{
+	&.d-hide{
 		animation-name: hide;
 	    animation-duration: .1s;
 	    animation-timing-function: linear;
@@ -124,7 +124,7 @@
 	}
 
 	&.inline{
-		&.show .d-calendar{
+		&.d-show .d-calendar{
 			animation: none;
 		}
 	}
@@ -330,7 +330,7 @@
 		pointer-events: none;
 		transition: height .2s cubic-bezier(0.18, 0.89, 0.32, 1.28);
 
-		&.show{
+		&.d-show{
 			height: 44px;
 			opacity: 1;
 			pointer-events: auto;
@@ -364,7 +364,7 @@
 		pointer-events: none;
 		transition: height .2s cubic-bezier(0.18, 0.89, 0.32, 1.28);
 
-		&.show{
+		&.d-show{
 			height: 44px;
 			opacity: 1;
 			pointer-events: auto;
@@ -730,7 +730,7 @@
   animation-name: fadeInUp;
 }
 
-.show .d-calendar{
+.d-show .d-calendar{
 	animation-name: animJelly;
 	animation-duration: 1s;
 	animation-timing-function: ease-out;
