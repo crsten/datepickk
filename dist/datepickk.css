@@ -178,6 +178,41 @@
 #Datepickk.fullscreen .d-legend {
   max-width: none;
 }
+#Datepickk .d-date-legends {
+  position: absolute;
+  width: 100%;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-align-content: flex-end;
+      -ms-flex-line-pack: end;
+          align-content: flex-end;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  height: 100%;
+  z-index: -1;
+  -webkit-flex-wrap: wrap;
+      -ms-flex-wrap: wrap;
+          flex-wrap: wrap;
+  padding: .5px;
+  top: 0;
+  left: 0;
+  box-sizing: border-box;
+}
+#Datepickk .d-date-legends:empty {
+  display: none;
+}
+#Datepickk .d-date-legend {
+  -webkit-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  height: 100%;
+  box-sizing: border-box;
+}
 #Datepickk .d-legend {
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -185,14 +220,18 @@
   -webkit-flex-wrap: wrap;
       -ms-flex-wrap: wrap;
           flex-wrap: wrap;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   width: 100%;
   z-index: 2;
+  background-color: whitesmoke;
   max-width: 500px;
   position: relative;
   color: white;
 }
 #Datepickk .d-legend:empty {
-  display: none;
+  height: 0;
 }
 #Datepickk .d-legend p {
   -webkit-backface-visibility: visible !important;
@@ -204,7 +243,8 @@
   -webkit-animation-fill-mode: both;
           animation-fill-mode: both;
   margin: 0;
-  padding: 15px 30px 15px 0;
+  padding: 15px;
+  transition: background-color 0.2s ease;
   cursor: pointer;
 }
 #Datepickk .d-legend p:after {
@@ -350,12 +390,12 @@
 }
 #Datepickk .d-month-picker > div:hover,
 #Datepickk .d-month-picker > div:focus {
-  background-color: #b67a00;
+  background-color: #004f69;
   color: white;
 }
 #Datepickk .d-month-picker > div.current {
-  background-color: #d5e900;
-  color: black;
+  background-color: #00349c;
+  color: white;
 }
 #Datepickk .d-year-picker {
   display: -webkit-flex;
@@ -384,12 +424,12 @@
 }
 #Datepickk .d-year-picker > div:hover,
 #Datepickk .d-year-picker > div:focus {
-  background-color: #b67a00;
+  background-color: #004f69;
   color: white;
 }
 #Datepickk .d-year-picker > div.current {
-  background-color: #d5e900;
-  color: black;
+  background-color: #00349c;
+  color: white;
 }
 #Datepickk .d-weekdays {
   display: -webkit-flex;
@@ -397,7 +437,7 @@
   display: flex;
 }
 #Datepickk .d-week {
-  background-color: #e99c00;
+  background-color: #00759c;
   color: white;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -433,9 +473,6 @@
       -ms-flex: 1;
           flex: 1;
 }
-#Datepickk .d-table + .d-table {
-  border-left: 1px solid rgba(0, 0, 0, 0.05);
-}
 #Datepickk .d-table:first-child:nth-last-child(n + 3),
 #Datepickk .d-table:first-child:nth-last-child(n + 3) ~ div {
   -webkit-flex: 0;
@@ -446,6 +483,12 @@
           flex-basis: calc(100% / 3 - 1px);
   /*-1px due to browser render*/
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+#Datepickk .d-table label:nth-of-type(7n) .d-date-legends {
+  padding-right: 0;
+}
+#Datepickk .d-table label:nth-last-of-type(-n + 7) .d-date-legends {
+  padding-bottom: 0;
 }
 #Datepickk .d-table input {
   display: none;
@@ -476,15 +519,13 @@
   position: relative;
 }
 #Datepickk .d-table input + label[style*="linear-gradient"] text {
-  background-color: rgba(0, 0, 0, 0.5);
-  border-radius: 3px;
-  padding: 0px 3px;
+  text-shadow: 0 0 20px black;
 }
 #Datepickk .d-table input + label.today text:before {
   content: '';
   width: 100%;
   height: 2px;
-  background-color: #e99c00;
+  background-color: #00759c;
   position: absolute;
   bottom: -5px;
   left: 0;
@@ -496,7 +537,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(233, 98, 0, 0.5);
+  background-color: rgba(0, 156, 156, 0.5);
   transition: -webkit-transform 0.1s ease-out;
   transition: transform 0.1s ease-out;
   -webkit-transform: scaleX(0);
@@ -544,13 +585,12 @@
 #Datepickk .d-table input + label [data-tooltip]:after {
   content: '';
   border-radius: 100%;
-  background-color: #e99c00;
+  background-color: #1B363F;
   width: 5px;
   height: 5px;
-  display: inline-block;
-  vertical-align: text-top;
-  -webkit-transform: translateX(3px);
-          transform: translateX(3px);
+  position: absolute;
+  top: 0;
+  right: -10px;
 }
 #Datepickk .d-table input + label .d-tooltip {
   position: absolute;
@@ -559,9 +599,9 @@
   padding: 7px;
   font-size: .7em;
   z-index: 13;
+  text-align: center;
   top: 100%;
   left: 50%;
-  border-radius: 5px;
   -webkit-transform: translate(-50%, -5px);
           transform: translate(-50%, -5px);
   display: none;
@@ -640,7 +680,7 @@
 #Datepickk .d-tables.range:not(.before) input:not(.single):checked + label ~ label:not(.hidden):before {
   -webkit-transform: scaleX(1);
           transform: scaleX(1);
-  background-color: rgba(233, 98, 0, 0.3);
+  background-color: rgba(0, 156, 156, 0.3);
 }
 #Datepickk .d-tables.range:not(.before) input:not(.single):checked ~ label:hover ~ label,
 #Datepickk .d-tables.range:not(.before) input:not(.single):checked ~ label:focus ~ label {
@@ -663,7 +703,7 @@
 #Datepickk .d-tables.range:not(.before) input:not(.single):checked ~ input:checked + label:before {
   -webkit-transform: scaleX(1);
           transform: scaleX(1);
-  background-color: rgba(233, 98, 0, 0.5);
+  background-color: rgba(0, 156, 156, 0.5);
 }
 #Datepickk .d-tables.range:not(.before) input:not(.single):checked ~ input:checked + label ~ label {
   color: inherit;
@@ -682,7 +722,7 @@
 #Datepickk .d-tables.range.before input:not(.single):not(:checked) + label:before {
   -webkit-transform: scaleX(1);
           transform: scaleX(1);
-  background-color: rgba(233, 98, 0, 0.3);
+  background-color: rgba(0, 156, 156, 0.3);
 }
 #Datepickk .d-tables.range.before input:not(.single):checked + label ~ label {
   color: inherit;

@@ -101,6 +101,7 @@
 					var tooltip = document.createElement('span');
 						tooltip.setAttribute('class','d-tooltip');
 
+
 					container.appendChild(input);
 					container.appendChild(label);
 
@@ -116,6 +117,36 @@
 				}
 
 				that.el.tables.appendChild(container);
+			}
+
+			that.el.tables.addEventListener('mouseover',highlightLegend);
+			that.el.tables.addEventListener('mouseout',highlightLegend);
+
+			function highlightLegend(e){
+				if(e.target.nodeName !== 'LABEL')return;
+
+				var legendIds = (e.target.getAttribute('data-legend-id'))?e.target.getAttribute('data-legend-id').split(' '):[];
+				if(!legendIds.length)return;
+
+				for(var index = 0; index < legendIds.length;index++){
+					var element = that.el.legend.querySelector('[data-legend-id="' + legendIds[index] + '"]');
+					if(e.type == 'mouseover' && element){
+						var color = element.getAttribute('data-color');
+						var rgbcolor = (color)?hexToRgb(color):color;
+						element.setAttribute('style','background-color:rgba(' + rgbcolor.r + ',' + rgbcolor.g + ',' + rgbcolor.b + ',0.35);');	
+					}else if(element){
+						element.removeAttribute('style');
+					}
+				}
+
+				function hexToRgb(hex) {
+				    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+				    return result ? {
+				        r: parseInt(result[1], 16),
+				        g: parseInt(result[2], 16),
+				        b: parseInt(result[3], 16)
+				    } : null;
+				}
 			}
 		}
 
@@ -178,6 +209,15 @@
 			}
 		}
 
+		function parseMonth(month){
+			if(month > 11){
+				month -= 12;
+			}else if(month < 0){
+				month += 12;
+			}
+			return month;
+		}
+
 		function generateDates(year,month){
 			var monthElements = that.el.querySelectorAll('.d-table');
 			var weekStart = languages[lang].weekStart;
@@ -195,13 +235,14 @@
 				}else{
 					startDay -= weekStart;
 				}
-
-				monthElements[p].setAttribute('data-month',languages[lang].monthNames[month-1+p]);
+				var monthText = languages[lang].monthNames[parseMonth(month-1+p)];
+				monthElements[p].setAttribute('data-month',monthText);
 
 				for(var i = 0;i < inputElements.length;i++){
 					inputElements[i].checked = false;
 					inputElements[i].removeAttribute('disabled');
 					labelElements[i].removeAttribute('style');
+					labelElements[i].removeAttribute('data-legend-id');
 					labelElements[i].className = '';
 
 					var date = null;
@@ -271,11 +312,13 @@
 						if(_highlights.length > 0){
 							var bgColor = '';
 							var legendIds = '';
+
 							if(_highlights.length > 1){
 								var percent = Math.round(100 / _highlights.length);
-								bgColor = 'background: linear-gradient(45deg,';
+								bgColor = 'background: linear-gradient(-35deg,';
 								for(var z = 0;z < _highlights.length;z++){
-									legendIds += highlight.indexOf(_highlights[z]) + ' ';
+									legendIds += highlight.indexOf(_highlights[z]);
+									if(z !== _highlights.length -1){legendIds += ' ';}
 									bgColor += _highlights[z].backgroundColor + ' ' + (percent*z) + '%';
 									if(z != _highlights.length - 1){
 										bgColor += ',';

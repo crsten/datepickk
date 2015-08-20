@@ -1,5 +1,5 @@
 /*Main color*/
-@color: #E99C00; //change if you want different theme
+@color: #00759c; //change if you want different theme
 
 @spin: -15;
 
@@ -177,23 +177,52 @@
 		}
 	}
 
+	.d-date-legends{
+		position: absolute;
+	    width: 100%;
+	    display: flex;
+	    flex-direction: row;
+	    align-content: flex-end;
+	    justify-content:center;
+	    height: 100%;
+	    z-index: -1;
+	    flex-wrap: wrap;
+	    padding: .5px;
+	    top: 0;
+	    left: 0;
+	    box-sizing: border-box;
+
+	    &:empty{
+	    	display: none;
+	    }
+	}
+
+	.d-date-legend{
+		flex:1;
+	    height: 100%;
+	    box-sizing: border-box;
+	}
+
 	.d-legend{
 		display: flex;
 		flex-wrap:wrap;
+		justify-content:center;
 		width: 100%;
 		z-index: 2;
+		background-color:whitesmoke;
 		max-width: 500px;
 		position: relative;
 		color:white;
 
 		&:empty{
-			display: none;
+			height:0;
 		}
 
 		p{
 			.fadeInUp();
 			margin:0;
-			padding: 15px 30px 15px 0;
+			padding: 15px;
+			transition: background-color .2s ease;
 			cursor:pointer;
 
 			&:after{
@@ -422,15 +451,19 @@
 	    flex-wrap: wrap;
 	    flex: 1;
 
-	    & + .d-table{
-	    	border-left:1px solid rgba(0,0,0,0.05);
-	    }
-
 	    &:first-child:nth-last-child(n + 3),&:first-child:nth-last-child(n + 3) ~ div{
 			flex:0;
 			flex-basis: calc(100% ~"/" 3 ~"-" 1px);/*-1px due to browser render*/
 
 			border-bottom:1px solid rgba(0,0,0,0.05);
+	    }
+
+	    label:nth-of-type(7n) .d-date-legends{
+			padding-right:0;
+	    }
+
+	    label:nth-last-of-type(-n + 7) .d-date-legends{
+	    	padding-bottom:0;
 	    }
 		
 		input{
@@ -456,9 +489,7 @@
 					}
 
 					&[style*="linear-gradient"] text{
-						background-color: rgba(0, 0, 0, 0.5);
-				    border-radius: 3px;
-				    padding: 0px 3px;
+						text-shadow: 0 0 20px black;
 					}
 
 					&.today text:before{
@@ -509,12 +540,12 @@
   					&:after{
 						content: '';
 						border-radius: 100%;
-						background-color: @color;
+						background-color: #1B363F;
 						width: 5px;
 						height: 5px;
-						display: inline-block;
-						vertical-align: text-top;
-						transform: translateX(3px);
+						position: absolute;
+						top: 0;
+						right: -10px;
 					}
   				}
 
@@ -526,9 +557,9 @@
 					padding: 7px;
 					font-size: .7em;
 					z-index: 13;
+					text-align: center;
 					top: 100%;
 					left: 50%;
-					border-radius: 5px;
 					transform: translate(-50%, -5px);
 					display: none;
 
