@@ -1,0 +1,17 @@
+{
+	"name":"Datepickk",
+	"version": "0.0.1",
+	"main": "dist/datepickk.js",
+    "ignore": [
+        "gulp",
+        "docs",
+        "src",
+        "node_modules",
+        ".bowerrc",
+        ".gitignore",
+        "bower.json",
+        "gulpfile.js",
+        "package.json",
+        "README.md"
+    ]
+}

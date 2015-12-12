@@ -4,7 +4,7 @@ var sourcemaps = require('gulp-sourcemaps');
 var rename = require('gulp-rename');
 
 gulp.task('js',function(){
-	gulp.src('js/datepickk.js')
+	gulp.src('src/js/datepickk.js')
 	.pipe(gulp.dest('dist'))
 	.pipe(rename({
 		suffix: '.min'
@@ -16,5 +16,5 @@ gulp.task('js',function(){
 });
 
 gulp.task('watch:js',['js'],function(){
-	gulp.watch('js/datepickk.js',['js']);
+	gulp.watch('src/js/datepickk.js',['js']);
 });
