@@ -131,9 +131,8 @@
 				for(var index = 0; index < legendIds.length;index++){
 					var element = that.el.legend.querySelector('[data-legend-id="' + legendIds[index] + '"]');
 					if(e.type == 'mouseover' && element){
-						var color = element.getAttribute('data-color');
-						var rgbcolor = (color)?hexToRgb(color):color;
-						element.setAttribute('style','background-color:rgba(' + rgbcolor.r + ',' + rgbcolor.g + ',' + rgbcolor.b + ',0.35);');	
+						var color = (element.getAttribute('data-color'))?hexToRgb(element.getAttribute('data-color')):null;
+						element.setAttribute('style','background-color:rgba(' + color.r + ',' + color.g + ',' + color.b + ',0.35);');	
 					}else if(element){
 						element.removeAttribute('style');
 					}
@@ -253,7 +252,7 @@
 							labelElements[i].className = 'prev';
 						}else{
 							date = '';
-							labelElements[i].className = 'hidden';
+							labelElements[i].className = 'd-hidden';
 							inputElements[i].setAttribute('disabled',true);
 						}
 					}else if(i < days + startDay){
@@ -267,7 +266,7 @@
 							labelElements[i].className = 'next';
 						}else{
 							date = '';
-							labelElements[i].className = 'hidden';
+							labelElements[i].className = 'd-hidden';
 							inputElements[i].setAttribute('disabled',true);
 						}
 					}
@@ -281,7 +280,7 @@
 
 						if((minDate && date < minDate) || (maxDate && date > maxDate)){
 							inputElements[i].setAttribute('disabled',true);
-							labelElements[i].className = 'hidden';
+							labelElements[i].className = 'd-hidden';
 								
 						}
 
@@ -315,7 +314,7 @@
 
 							if(_highlights.length > 1){
 								var percent = Math.round(100 / _highlights.length);
-								bgColor = 'background: linear-gradient(-35deg,';
+								bgColor = 'background: linear-gradient(-45deg,';
 								for(var z = 0;z < _highlights.length;z++){
 									legendIds += highlight.indexOf(_highlights[z]);
 									if(z !== _highlights.length -1){legendIds += ' ';}
@@ -458,7 +457,7 @@
 			setDate();
 		};
 
-		function selectDate(date){
+		function selectDate(date,ignoreOnSelect){
 			date.setHours(0,0,0,0);
 			var el = that.el.querySelector('[data-date="'+ date.toJSON() +'"]');
 			if(el && !el.checked){
@@ -467,12 +466,12 @@
 
 			selectedDates.push(date);
 
-			if(onSelect){
+			if(onSelect && !ignoreOnSelect){
 				onSelect.apply(date,[true]);
 			}
 		};
 
-		function unselectDate(date){
+		function unselectDate(date,ignoreOnSelect){
 			date.setHours(0,0,0,0);
 			var el = that.el.querySelector('[data-date="'+ date.toJSON() +'"]');
 			if(el){
@@ -482,14 +481,14 @@
 
 			selectedDates = selectedDates.filter(function(x){return x.getTime() != date.getTime()});
 
-			if(onSelect){
+			if(onSelect && !ignoreOnSelect){
 				onSelect.apply(date,[false]);
 			}
 		};
 
-		function unselectAll(){
+		function unselectAll(ignoreOnSelect){
 			for(var i = 0; i < selectedDates.length; i){
-				unselectDate(selectedDates[i]);
+				unselectDate(selectedDates[i],ignoreOnSelect);
 			}
 		};
 
@@ -508,11 +507,12 @@
 						unselectDate(selectedDates[0]);
 					}
 					
-					if(range){
-						var first = that.el.querySelector('[data-date="'+ selectedDates[0].toJSON() +'"]');
-						if(!first && date > selectedDates[0]){
-							that.el.tables.classList.add('before');
-						}
+				}
+				
+				if(range && selectedDates.length){
+					var first = that.el.querySelector('[data-date="'+ selectedDates[0].toJSON() +'"]');
+					if(!first && date > selectedDates[0]){
+						that.el.tables.classList.add('before');
 					}
 				}
 				
@@ -546,6 +546,7 @@
 		};
 
 		function show(properties){
+			if(!that.inline && that.container === document.body){document.body.classList.add('d-noscroll');}
 			setArgs(properties);
 			var handler = function(){
 				that.el.classList.remove('d-show');
@@ -563,6 +564,7 @@
 		};
 
 		function hide(){
+			document.body.classList.remove('d-noscroll');
 			var handler = function(){
 				that.el.parentNode.removeChild(that.el);
 				opened = false;

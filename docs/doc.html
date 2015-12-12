@@ -39,8 +39,8 @@
 			<div class="col-xs-12 col-md-1 align-middle align-center">
 				<p style="width:100%;text-align:center;">or</p>
 			</div>
-			<div class="col-xs-12 col-md-6" >
-				<div id="demoPicker" style="height:600px;width:100%;"></div>
+			<div class="col-xs-12 col-md-6 align-center" >
+				<div id="demoPicker" style="height:600px;width:100%;max-width: 600px;"></div>
 				<script>
 					var now = new Date();
 					var demoPicker = new Datepickk({
@@ -54,8 +54,8 @@
 						highlight:{
 							start: new Date(now.getFullYear(),now.getMonth(),3),
 							end: new Date(now.getFullYear(),now.getMonth(),6),
-							backgroundColor:'#3faa56',
-							color:'#ffffff',
+							backgroundColor:'#05676E',
+							color:'#fff',
 							legend: 'Highlight'
 						}
 					});
@@ -123,9 +123,9 @@
 				<ul>
 					<li><a href="#show">show(props)</a></li>
 					<li><a href="#hide">hide()</a></li>
-					<li><a href="#selectDate">selectDate(Date)</a></li>
-					<li><a href="#unselectDate">unselectDate(Date)</a></li>
-					<li><a href="#unselectAll">unselectAll()</a></li>
+					<li><a href="#selectDate">selectDate(Date,ignoreOnSelect)</a></li>
+					<li><a href="#unselectDate">unselectDate(Date,ignoreOnSelect)</a></li>
+					<li><a href="#unselectAll">unselectAll(ignoreOnSelect)</a></li>
 				</ul>
 			</div>
 			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 block">
@@ -138,7 +138,7 @@
 			</div>
 		</div>
 		
-		<h1 class="center"><span class="line"></span>So let's take a tour<span class="line"></span></h1>
+		<h1 class="center"><span class="line"></span>Take a tour<span class="line"></span></h1>
 
 		<div class="row equal-height">
 			
@@ -952,7 +952,7 @@
 			</div>
 
 			<div class="col-xs-12 col-md-6 block" id="selectDate">
-				<h2>selectDate() <span>Function</span> <a href="#index">Go up</a></h2>
+				<h2>selectDate( Date, ignoreOnSelectEvent ) <span>Function</span> <a href="#index">Go up</a></h2>
 				<pre>
 					<code>
 						//Type: Date<br>
@@ -970,7 +970,7 @@
 			</div>
 
 			<div class="col-xs-12 col-md-6 block" id="unselectDate">
-				<h2>unselectDate(Date) <span>Function</span> <a href="#index">Go up</a></h2>
+				<h2>unselectDate( Date, ignoreOnSelectEvent ) <span>Function</span> <a href="#index">Go up</a></h2>
 				<pre>
 					<code>
 						//Type: Date<br>
@@ -991,7 +991,7 @@
 			</div>
 			
 			<div class="col-xs-12 col-md-6 block" id="unselectAll">
-				<h2>unselectAll() <span>Function</span> <a href="#index">Go up</a></h2>
+				<h2>unselectAll( ignoreOnSelectEvent ) <span>Function</span> <a href="#index">Go up</a></h2>
 				<pre>
 					<code>
 						//Unselect all<br>
