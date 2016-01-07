@@ -358,11 +358,11 @@
 }
 #Datepickk .d-month-picker > div:hover,
 #Datepickk .d-month-picker > div:focus {
-  background-color: #970f25;
+  background-color: #e32d2d;
   color: white;
 }
 #Datepickk .d-month-picker > div.current {
-  background-color: #c64013;
+  background-color: #e9965a;
   color: white;
 }
 #Datepickk .d-year-picker {
@@ -392,11 +392,11 @@
 }
 #Datepickk .d-year-picker > div:hover,
 #Datepickk .d-year-picker > div:focus {
-  background-color: #970f25;
+  background-color: #e32d2d;
   color: white;
 }
 #Datepickk .d-year-picker > div.current {
-  background-color: #c64013;
+  background-color: #e9965a;
   color: white;
 }
 #Datepickk .d-weekdays {
@@ -405,7 +405,7 @@
   display: flex;
 }
 #Datepickk .d-week {
-  background-color: #c61331;
+  background-color: #e95a5a;
   color: white;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -493,7 +493,7 @@
   content: '';
   width: 100%;
   height: 2px;
-  background-color: #c61331;
+  background-color: #e95a5a;
   position: absolute;
   bottom: -5px;
   left: 0;
@@ -505,7 +505,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(198, 19, 94, 0.5);
+  background-color: rgba(233, 90, 126, 0.5);
   transition: -webkit-transform 0.1s ease-out;
   transition: transform 0.1s ease-out;
   -webkit-transform: scaleX(0);
@@ -616,7 +616,9 @@
 }
 #Datepickk .d-table input + label.d-hidden {
   cursor: default;
-  opacity: 0;
+  color: #ccc!important;
+  background: #f0f0f0!important;
+  text-decoration: line-through;
 }
 #Datepickk .d-table input + label.d-hidden:after {
   content: none;
@@ -648,7 +650,7 @@
 #Datepickk .d-tables.range:not(.before) input:not(.single):checked + label ~ label:not(.hidden):before {
   -webkit-transform: scaleX(1);
           transform: scaleX(1);
-  background-color: rgba(198, 19, 94, 0.3);
+  background-color: rgba(233, 90, 126, 0.3);
 }
 #Datepickk .d-tables.range:not(.before) input:not(.single):checked ~ label:hover ~ label,
 #Datepickk .d-tables.range:not(.before) input:not(.single):checked ~ label:focus ~ label {
@@ -671,7 +673,7 @@
 #Datepickk .d-tables.range:not(.before) input:not(.single):checked ~ input:checked + label:before {
   -webkit-transform: scaleX(1);
           transform: scaleX(1);
-  background-color: rgba(198, 19, 94, 0.5);
+  background-color: rgba(233, 90, 126, 0.5);
 }
 #Datepickk .d-tables.range:not(.before) input:not(.single):checked ~ input:checked + label ~ label {
   color: inherit;
@@ -690,7 +692,7 @@
 #Datepickk .d-tables.range.before input:not(.single):not(:checked) + label:before {
   -webkit-transform: scaleX(1);
           transform: scaleX(1);
-  background-color: rgba(198, 19, 94, 0.3);
+  background-color: rgba(233, 90, 126, 0.3);
 }
 #Datepickk .d-tables.range.before input:not(.single):checked + label ~ label {
   color: inherit;
