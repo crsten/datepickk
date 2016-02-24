@@ -1,6 +1,7 @@
 /*!
- * Datepickk v1.0.0
- * (c) 2015 Carsten Jacobsen
+ * Datepickk
+ * Docs & License: https://crsten.github.com/datepickk
+ * (c) 2016 Carsten Jacobsen
  */
 (function(){
 	
