@@ -1,17 +1,26 @@
 {
-	"name":"Datepickk",
-	"version": "0.0.3",
-	"main": "dist/datepickk.js",
-    "ignore": [
-        "gulp",
-        "docs",
-        "src",
-        "node_modules",
-        ".bowerrc",
-        ".gitignore",
-        "bower.json",
-        "gulpfile.js",
-        "package.json",
-        "README.md"
-    ]
+  "name": "datepickk",
+  "description": "Flexbox/js datepicker",
+  "main": "src/js/datepickk.js",
+  "authors": [
+    "Carsten Jacobsen"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "datepicker",
+    "js",
+    "flexbox"
+  ],
+  "moduleType": [
+    "amd",
+    "globals"
+  ],
+  "homepage": "https://crsten.github.io/datepickk",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
 }
