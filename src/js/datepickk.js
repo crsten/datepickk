@@ -2,7 +2,7 @@
  * Datepickk
  * Docs & License: https://crsten.github.com/datepickk
  * (c) 2016 Carsten Jacobsen
- * v. 1.0.2
+ * v. 1.0.3
  */
 (function(){
 	
@@ -649,7 +649,7 @@
 		};
 
 		function setArgs(x){
-			for(key in x){
+			for(var key in x){
 				if(key in that){
 					that[key] = x[key];
 				}
