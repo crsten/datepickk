@@ -2,6 +2,7 @@
  * Datepickk
  * Docs & License: https://crsten.github.com/datepickk
  * (c) 2016 Carsten Jacobsen
+ * v. 1.0.1
  */
 (function(){
 	
@@ -14,7 +15,7 @@
 		var currentYear = new Date().getFullYear();
 		var currentMonth = new Date().getMonth() + 1;
 
-		languages = {
+		var languages = {
 			no: {
 				monthNames:['Januar','Februar','Mars','April','Mai','Juni','Juli','August','September','Oktober','November','Desember'],
 				dayNames:['ma','ti','on','to','fr','lø','sø'],
