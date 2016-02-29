@@ -2,7 +2,7 @@
  * Datepickk
  * Docs & License: https://crsten.github.com/datepickk
  * (c) 2016 Carsten Jacobsen
- * v. 1.0.1
+ * v. 1.0.2
  */
 (function(){
 	
@@ -66,7 +66,7 @@
 						weekEl.setAttribute('class','d-week');
 					for(var i = 0; i < 7;i++){
 						var dayEl = document.createElement('div');
-							dayTextEl = document.createElement('p');
+						var	dayTextEl = document.createElement('p');
 							dayTextEl.innerHTML = languages[lang].dayNames[i];
 
 							dayEl.appendChild(dayTextEl);
