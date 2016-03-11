@@ -1,17 +1,18 @@
 {
   "name": "Datepickk",
-  "version": "1.0.0",
   "description": "Flexbox/js datepicker",
   "main": "gulpfile.js",
   "directories": {
     "doc": "docs"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "commit": "git-cz",
+    "test": "",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "repository": {
     "type": "git",
-    "url": "https://crsten@bitbucket.org/crsten/datepickk.git"
+    "url": "https://github.com/crsten/datepickk.git"
   },
   "keywords": [
     "datepicker",
@@ -20,7 +21,9 @@
   ],
   "author": "Carsten Jacobsen",
   "license": "ISC",
-  "dependencies": {
+  "devDependencies": {
+    "commitizen": "^2.7.2",
+    "cz-conventional-changelog": "^1.1.5",
     "fs": "0.0.2",
     "gulp": "^3.9.0",
     "gulp-autoprefixer": "^2.3.1",
@@ -29,6 +32,12 @@
     "gulp-rename": "^1.2.2",
     "gulp-sourcemaps": "^1.5.2",
     "gulp-uglify": "^1.2.0",
-    "gulp-zip": "^3.0.2"
+    "gulp-zip": "^3.0.2",
+    "semantic-release": "^4.3.5"
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-conventional-changelog"
+    }
   }
 }

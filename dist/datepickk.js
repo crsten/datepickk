@@ -2,7 +2,6 @@
  * Datepickk
  * Docs & License: https://crsten.github.com/datepickk
  * (c) 2016 Carsten Jacobsen
- * v. 1.0.3
  */
 (function(){
 	
@@ -1218,4 +1217,9 @@
 
 	    return browser;
 	}
+
+	/* Spread it to the world! */
+	if ( typeof define === 'function' && define.amd ) define('Datepickk', Datepickk);
+	else if ( typeof exports === 'object' ) module.exports = Datepickk;
+	else window.Datepickk = Datepickk;
 })();

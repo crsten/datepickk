@@ -7,4 +7,5 @@ fs.readdirSync(__dirname + '/gulp').forEach(function(task){
 	}
 });
 
-gulp.task('run',['watch:less','watch:js']);
+gulp.task('dev',['watch:less','watch:js']);
+gulp.task('build',['less','js']);

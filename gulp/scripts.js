@@ -5,12 +5,12 @@ var rename = require('gulp-rename');
 
 gulp.task('js',function(){
 	gulp.src('src/js/datepickk.js')
+	.pipe(sourcemaps.init())
 	.pipe(gulp.dest('dist'))
+	.pipe(uglify())
 	.pipe(rename({
 		suffix: '.min'
 	}))
-	.pipe(sourcemaps.init())
-	.pipe(uglify())
 	.pipe(sourcemaps.write('./'))
 	.pipe(gulp.dest('dist'));
 });
