@@ -1,9 +1,9 @@
 # Datepickk.js
 [![Build Status](https://travis-ci.org/crsten/datepickk.svg?branch=master&style=flat-square)](https://travis-ci.org/crsten/datepickk)
 [![npm](https://img.shields.io/npm/dt/datepickk.svg?style=flat-square)](https://www.npmjs.com/package/datepickk)
-[![Bower](https://img.shields.io/bower/v/datepickk.svg?style=flat-square)]()
+![Bower](https://img.shields.io/bower/v/datepickk.svg?style=flat-square)
 [![npm](https://img.shields.io/npm/v/datepickk.svg?style=flat-square)](https://www.npmjs.com/package/datepickk)
-[![npm](https://img.shields.io/npm/l/datepickk.svg?style=flat-square)]()
+![npm](https://img.shields.io/npm/l/datepickk.svg?style=flat-square)
 
 ##Inspiration
 
