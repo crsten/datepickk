@@ -7,7 +7,7 @@
   },
   "scripts": {
     "commit": "git-cz",
-    "test": "",
+    "test": "echo",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "repository": {
@@ -19,8 +19,11 @@
     "js",
     "flexbox"
   ],
+  "bugs": {
+    "url": "https://github.com/crsten/datepickk/issues"
+  },
   "author": "Carsten Jacobsen",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "commitizen": "^2.7.2",
     "cz-conventional-changelog": "^1.1.5",
