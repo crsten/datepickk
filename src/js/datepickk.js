@@ -1183,7 +1183,6 @@
 					'<div class="d-legend"></div>' +
 					'<button class="d-confirm"></button>' + 
 					'<div class="d-overlay"></div>';
-	window.Datepickk = Datepickk;
 
 	var getBrowserVersion =  function(){
 		var browser = {
