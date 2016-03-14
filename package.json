@@ -1,7 +1,7 @@
 {
   "name": "datepickk",
   "description": "Flexbox/js datepicker",
-  "main": "gulpfile.js",
+  "main": "src/js/datepickk.js",
   "directories": {
     "doc": "docs"
   },
