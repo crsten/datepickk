@@ -461,9 +461,15 @@
 		function selectDate(date,ignoreOnSelect){
 			date.setHours(0,0,0,0);
 			var el = that.el.querySelector('[data-date="'+ date.toJSON() +'"]');
+			
+			if(range && el.checked) {
+				el.classList.add('single');
+			}
+
 			if(el && !el.checked){
 				el.checked = true;
 			}
+
 
 			selectedDates.push(date);
 
@@ -1183,7 +1189,6 @@
 					'<div class="d-legend"></div>' +
 					'<button class="d-confirm"></button>' + 
 					'<div class="d-overlay"></div>';
-	window.Datepickk = Datepickk;
 
 	var getBrowserVersion =  function(){
 		var browser = {
