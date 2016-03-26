@@ -994,11 +994,11 @@
 				},
 				set: function(x){
 					if(x instanceof Array){
-						for(var i = 0;i < x.length;i++){
-							if(x[i].date && x[i].text && x[i].date instanceof Date){
-								tooltips[new Date(x[i].date.getFullYear(),x[i].date.getMonth(),x[i].date.getDate()).getTime()] = x[i].text;
+						x.forEach(function(item) {
+							if(item.date && item.text && item.date instanceof Date){
+								tooltips[new Date(item.date.getFullYear(),item.date.getMonth(),item.date.getDate()).getTime()] = item.text;
 							}
-						}
+						});
 					}else if(x instanceof Object){
 						if(x.date && x.text && x.date instanceof Date){
 							tooltips[new Date(x.date.getFullYear(),x.date.getMonth(),x.date.getDate()).getTime()] = x.text;
