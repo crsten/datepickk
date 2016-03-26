@@ -78,11 +78,9 @@
 		}
 
 		function generateYears(){
-			var years = that.el.yearPicker.childNodes;
-			for(var i = 0; i < years.length; i++){
-				var year = currentYear + parseInt(years[i].getAttribute('data-year'));
-				years[i].innerHTML = "'" + year.toString().substring(2,4);
-			}
+			[].slice.call(that.el.yearPicker.childNodes).forEach(function(node,index) {
+				node.innerHTML = "'" + (currentYear + parseInt(node.getAttribute('data-year'))).toString().substring(2,4);								
+			})
 		}
 
 		function generateInputs(){
@@ -124,20 +122,20 @@
 			that.el.tables.addEventListener('mouseout',highlightLegend);
 
 			function highlightLegend(e){
-				if(e.target.nodeName !== 'LABEL')return;
+				if(e.target.nodeName !== 'LABEL') return;
 
 				var legendIds = (e.target.getAttribute('data-legend-id'))?e.target.getAttribute('data-legend-id').split(' '):[];
-				if(!legendIds.length)return;
+				if(!legendIds.length) return;
 
-				for(var index = 0; index < legendIds.length;index++){
-					var element = that.el.legend.querySelector('[data-legend-id="' + legendIds[index] + '"]');
+				legendIds.forEach(function(legendId) {
+					var element = that.el.legend.querySelector('[data-legend-id="' + legendId + '"]');
 					if(e.type == 'mouseover' && element){
 						var color = (element.getAttribute('data-color'))?hexToRgb(element.getAttribute('data-color')):null;
 						element.setAttribute('style','background-color:rgba(' + color.r + ',' + color.g + ',' + color.b + ',0.35);');	
 					}else if(element){
 						element.removeAttribute('style');
 					}
-				}
+				});
 
 				function hexToRgb(hex) {
 				    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
@@ -186,35 +184,25 @@
 				}
 			}
 			
-			var legendItems = that.el.legend.querySelectorAll('.d-legend-item');
-
-			for(var q = 0;q<legendItems.length;q++){
-				if(legends.indexOf(legendItems[q]) < 0){
-					legendItems[q].removeEventListener('mouseover',hoverLegend);
-					legendItems[q].removeEventListener('mouseout',hoverLegend);
-					that.el.legend.removeChild(legendItems[q]);
+			[].slice.call(that.el.legend.querySelectorAll('.d-legend-item')).forEach(function(item) {
+				if(legends.indexOf(item) < 0){
+					item.removeEventListener('mouseover',hoverLegend);
+					item.removeEventListener('mouseout',hoverLegend);
+					that.el.legend.removeChild(item);
 				}
-			}
+			});
 
 			function hoverLegend(e){
-				var id = this.getAttribute('data-legend-id');
-				var elements = that.el.tables.querySelectorAll('[data-legend-id*="' + id + '"]');
-				for(var hel = 0;hel<elements.length;hel++){
-					if(e.type == 'mouseover'){
-						elements[hel].classList.add('legend-hover');
-					}else{
-						elements[hel].classList.remove('legend-hover');
-					}
-				}
+				[].slice.call(that.el.tables.querySelectorAll('[data-legend-id*="' + this.getAttribute('data-legend-id') + '"]')).forEach(function(element) {
+					if(e.type == 'mouseover') element.classList.add('legend-hover');
+					else element.classList.remove('legend-hover');				
+				});
 			}
 		}
 
 		function parseMonth(month){
-			if(month > 11){
-				month -= 12;
-			}else if(month < 0){
-				month += 12;
-			}
+			if(month > 11) month -= 12;
+			else if(month < 0) month += 12;
 			return month;
 		}
 
@@ -222,12 +210,10 @@
 			var monthElements = that.el.querySelectorAll('.d-table');
 			var weekStart = languages[lang].weekStart;
 
-			for(var p = 0;p<monthElements.length;p++){
-				var inputElements = monthElements[p].querySelectorAll('.d-table input');
-				var labelElements = monthElements[p].querySelectorAll('.d-table label');
-				var days = new Date(year,month+p,0).getDate();
-				var daysLast = new Date(year,month+p-1,0).getDate();
-				var startDay = new Date(year,month+p - 1,1).getDay();
+			[].slice.call(that.el.querySelectorAll('.d-table')).forEach(function(element, index) {
+				var days = new Date(year,month + index,0).getDate();
+				var daysLast = new Date(year,month + index - 1,0).getDate();
+				var startDay = new Date(year,month + index - 1,1).getDay();
 				var startDate = null;
 				var endDate = null;
 				if(startDay - weekStart < 0){
@@ -235,69 +221,71 @@
 				}else{
 					startDay -= weekStart;
 				}
-				var monthText = languages[lang].monthNames[parseMonth(month-1+p)];
-				monthElements[p].setAttribute('data-month',monthText);
+				var monthText = languages[lang].monthNames[parseMonth(month - 1 + index)];
+				element.setAttribute('data-month',monthText);
 
-				for(var i = 0;i < inputElements.length;i++){
-					inputElements[i].checked = false;
-					inputElements[i].removeAttribute('disabled');
-					labelElements[i].removeAttribute('style');
-					labelElements[i].removeAttribute('data-legend-id');
-					labelElements[i].className = '';
+				[].slice.call(element.querySelectorAll('.d-table input')).forEach(function(inputEl,i) {
+					var labelEl = inputEl.nextSibling;
+
+					inputEl.checked = false;
+					inputEl.removeAttribute('disabled');
+					labelEl.removeAttribute('style');
+					labelEl.removeAttribute('data-legend-id');
+					labelEl.className = '';
 
 					var date = null;
 					if(i < startDay){
-						labelElements[i].childNodes[0].innerHTML = daysLast - (startDay - i - 1);
-						if(p == 0){
-							date = new Date(year,month+p-2,daysLast - (startDay - i - 1));
-							labelElements[i].className = 'prev';
+						labelEl.childNodes[0].innerHTML = daysLast - (startDay - i - 1);
+						if(index == 0){
+							date = new Date(year,month + index - 2,daysLast - (startDay - i - 1));
+							labelEl.className = 'prev';
 						}else{
 							date = '';
-							labelElements[i].className = 'd-hidden';
-							inputElements[i].setAttribute('disabled',true);
+							labelEl.className = 'd-hidden';
+							inputEl.setAttribute('disabled',true);
 						}
 					}else if(i < days + startDay){
-						date = new Date(year,month+p-1,i-startDay+1);
-						labelElements[i].childNodes[0].innerHTML = i-startDay+1;
-						labelElements[i].className = '';
+						date = new Date(year,month + index - 1,i - startDay+1);
+						labelEl.childNodes[0].innerHTML = i - startDay + 1;
+						labelEl.className = '';
 					}else{
-						labelElements[i].childNodes[0].innerHTML = i - days - startDay + 1;
-						if(p == monthElements.length-1){
-							date = new Date(year,month+p,i - days - startDay + 1);
-							labelElements[i].className = 'next';
+						labelEl.childNodes[0].innerHTML = i - days - startDay + 1;
+						if(index == monthElements.length-1){
+							date = new Date(year,month + index,i - days - startDay + 1);
+							labelEl.className = 'next';
 						}else{
 							date = '';
-							labelElements[i].className = 'd-hidden';
-							inputElements[i].setAttribute('disabled',true);
+							labelEl.className = 'd-hidden';
+							inputEl.setAttribute('disabled',true);
 						}
 					}
 
 					if(date instanceof Date){
-						inputElements[i].setAttribute('data-date',date.toJSON());
+						inputEl.setAttribute('data-date',date.toJSON());
 					
 						if(disabledDates.indexOf(date.getTime()) != -1 || disabledDays.indexOf(date.getDay()) != -1){
-							inputElements[i].setAttribute('disabled',true);
+							inputEl.setAttribute('disabled',true);
 						}
 
 						if((minDate && date < minDate) || (maxDate && date > maxDate)){
-							inputElements[i].setAttribute('disabled',true);
-							labelElements[i].className = 'd-hidden';
+							inputEl.setAttribute('disabled',true);
+							labelEl.className = 'd-hidden';
 								
 						}
 
 						if(today && date.getTime() == new Date().setHours(0,0,0,0)){
-							labelElements[i].classList.add('today');
+							labelEl.classList.add('today');
 						}else{
-							labelElements[i].classList.remove('today');
+							labelEl.classList.remove('today');
 						}
 
 
 						if(tooltips[date.getTime()]){
-							labelElements[i].childNodes[0].setAttribute('data-tooltip',true);
-							labelElements[i].childNodes[1].innerHTML = tooltips[date.getTime()];
+							labelEl.childNodes[0].setAttribute('data-tooltip',true);
+							labelEl.childNodes[1].innerHTML = tooltips[date.getTime()];
 						}else{
-							labelElements[i].childNodes[0].removeAttribute('data-tooltip');
-							labelElements[i].childNodes[1].innerHTML = '';
+							labelEl.childNodes[0].removeAttribute('data-tooltip');
+							labelEl.childNodes[1].innerHTML = '';
 						}
 
 						var _highlights = highlight.filter(function(x){
@@ -331,18 +319,18 @@
 								legendIds += highlight.indexOf(_highlights[0]);
 							}
 							var Color = (_highlights[0].color)?'color:'+ _highlights[0].color + ';':'';
-							labelElements[i].setAttribute('style',bgColor + Color);
-							labelElements[i].setAttribute('data-legend-id',legendIds);
+							labelEl.setAttribute('style',bgColor + Color);
+							labelEl.setAttribute('data-legend-id',legendIds);
 						}
 					}
-				}
-			}
+				});
+			});
 
 			generateLegends();
 		};
 
 		function setDate(){
-			if(that.el.tables.childNodes.length > 0 && that.el.tables.childNodes[0].childNodes.length > 0){}else{return;}
+			if(!that.el.tables.childNodes.length || !that.el.tables.childNodes[0].childNodes.length) return;
 
 			resetCalendar();
 
@@ -409,13 +397,12 @@
 		};
 
 		function renderSelectedDates(){
-			for(var i = 0; i < selectedDates.length;i++){
-				var date = selectedDates[i].toJSON();
-				var el = that.el.querySelector('[data-date="' + date + '"]');
+			selectedDates.forEach(function(date) {
+				var el = that.el.querySelector('[data-date="' + date.toJSON() + '"]');
 				if(el){
 					el.checked = true;
 				}
-			}
+			});
 
 			that.el.tables.classList.remove('before');
 			if(range && selectedDates.length > 1){
@@ -429,23 +416,17 @@
 		};
 
 		function resetCalendar(){
-			var inputElements = that.el.querySelectorAll('.d-table input');
-			for(var i = 0; i < inputElements.length; i++){
-				inputElements[i].checked = false;
-			}
-			var monthPick = that.el.monthPicker.querySelectorAll('.current');
-			if(monthPick.length){
-				for(var x = 0;x<monthPick.length;x++){
-					monthPick[x].classList.remove('current');
-				}
-			}
-			var yearPick = that.el.yearPicker.querySelectorAll('.current');
-			if(yearPick.length){
-				for(var x = 0;x<yearPick.length;x++){
-					yearPick[x].classList.remove('current');
-				}
-			}
+			[].slice.call(that.el.querySelectorAll('.d-table input')).forEach(function(inputEl) {
+				inputEl.checked = false;
+			});
 
+			[].slice.call(that.el.monthPicker.querySelectorAll('.current')).forEach(function(monthPickEl) {
+				monthPickEl.classList.remove('current');
+			});
+
+			[].slice.call(that.el.yearPicker.querySelectorAll('.current')).forEach(function(yearPickEl) {
+				yearPickEl.classList.remove('current');
+			});
 		};
 
 		function nextMonth(){
@@ -489,14 +470,14 @@
 			selectedDates = selectedDates.filter(function(x){return x.getTime() != date.getTime()});
 
 			if(onSelect && !ignoreOnSelect){
-				onSelect.apply(date,[false]);
+				onSelect.call(date,false);
 			}
 		};
 
 		function unselectAll(ignoreOnSelect){
-			for(var i = 0; i < selectedDates.length; i){
-				unselectDate(selectedDates[i],ignoreOnSelect);
-			}
+			selectedDates.forEach(function(date) {
+				unselectDate(date,ignoreOnSelect);				
+			});
 		};
 
 		function inputChange(e){
@@ -538,7 +519,7 @@
 			}
 
 			if(onSelect){
-				onSelect.apply(date,[input.checked]);
+				onSelect.call(date,input.checked);
 			}
 		};
 
@@ -613,23 +594,21 @@
 				}
 			});
 
-			var monthPickers = that.el.monthPicker.childNodes;
-			for(var y = 0; y < monthPickers.length;y++){
-				monthPickers[y].addEventListener(eventName,function(){
+			[].slice.call(that.el.monthPicker.childNodes).forEach(function(monthPicker) {
+				monthPicker.addEventListener(eventName,function(){
 					currentMonth = parseInt(this.getAttribute('data-month'));
 					setDate();
 					that.el.monthPicker.classList.remove('d-show');
-				});
-			}
+				});				
+			});
 
-			var yearPickers = that.el.yearPicker.childNodes;
-			for(var y = 0; y < yearPickers.length;y++){
-				yearPickers[y].addEventListener(eventName,function(){
+			[].slice.call(that.el.yearPicker.childNodes).forEach(function(yearPicker) {
+				yearPicker.addEventListener(eventName,function(){
 					currentYear += parseInt(this.getAttribute('data-year'));
 					setDate();
 					that.el.yearPicker.classList.remove('d-show');
-				});
-			}
+				});				
+			})
 
 			var startX = 0;
 			var distance = 0;
@@ -827,11 +806,11 @@
 				},
 				set: function(x){
 					if(x instanceof Array){
-						for(var i = 0;i < x.length;i++){
-							if(x[i] instanceof Date){
-								disabledDates.push(new Date(x[i].getFullYear(),x[i].getMonth(),x[i].getDate()).getTime());
-							}
-						}
+						x.forEach(function(date) {
+							if(date instanceof Date){
+								disabledDates.push(new Date(date.getFullYear(),date.getMonth(),date.getDate()).getTime());
+							}							
+						});
 					}else if(x instanceof Date){
 						disabledDates = [new Date(x.getFullYear(),x.getMonth(),x.getDate()).getTime()];
 					}else if(!x){
@@ -846,32 +825,32 @@
 				},
 				set: function(x){
 					if(x instanceof Array){
-						for(var i = 0;i < x.length;i++){
-							if(x[i] instanceof Object){
+						x.forEach(function(hl) {
+							if(hl instanceof Object){
 								var highlightObj = {};
 									highlightObj.dates = [];
 
-								if('start' in x[i]){
+								if('start' in hl){
 									highlightObj.dates.push({
-										start: new Date(x[i].start.getFullYear(),x[i].start.getMonth(),x[i].start.getDate()),
-										end: ('end' in x[i])?new Date(x[i].end.getFullYear(),x[i].end.getMonth(),x[i].end.getDate()):new Date(x[i].start.getFullYear(),x[i].start.getMonth(),x[i].start.getDate())
+										start: new Date(hl.start.getFullYear(),hl.start.getMonth(),hl.start.getDate()),
+										end: ('end' in hl)?new Date(hl.end.getFullYear(),hl.end.getMonth(),hl.end.getDate()):new Date(hl.start.getFullYear(),hl.start.getMonth(),hl.start.getDate())
 									});
-								}else if('dates' in x[i] && x[i].dates instanceof Array){
-									for(var n = 0;n < x[i].dates.length;n++){
+								}else if('dates' in hl && hl.dates instanceof Array){
+									hl.dates.forEach(function(hlDate) {
 										highlightObj.dates.push({
-											start: new Date(x[i].dates[n].start.getFullYear(),x[i].dates[n].start.getMonth(),x[i].dates[n].start.getDate()),
-											end: ('end' in x[i].dates[n])?new Date(x[i].dates[n].end.getFullYear(),x[i].dates[n].end.getMonth(),x[i].dates[n].end.getDate()):new Date(x[i].dates[n].start.getFullYear(),x[i].dates[n].start.getMonth(),x[i].dates[n].start.getDate())
+											start: new Date(hlDate.start.getFullYear(),hlDate.start.getMonth(),hlDate.start.getDate()),
+											end: ('end' in hlDate)?new Date(hlDate.end.getFullYear(),hlDate.end.getMonth(),hlDate.end.getDate()):new Date(hlDate.start.getFullYear(),hlDate.start.getMonth(),hlDate.start.getDate())
 										});
-									}
+									})
 								}
 
-								highlightObj.color 				= x[i].color;
-								highlightObj.backgroundColor 	= x[i].backgroundColor;
-								highlightObj.legend				= ('legend' in x[i])?x[i].legend:null;
+								highlightObj.color 				= hl.color;
+								highlightObj.backgroundColor 	= hl.backgroundColor;
+								highlightObj.legend				= ('legend' in hl)?hl.legend:null;
 
 								highlight.push(highlightObj);
 							}
-						}
+						});
 					}else if(x instanceof Object){
 						var highlightObj = {};
 						highlightObj.dates = [];
@@ -882,12 +861,12 @@
 								end: ('end' in x)?new Date(x.end.getFullYear(),x.end.getMonth(),x.end.getDate()):new Date(x.start.getFullYear(),x.start.getMonth(),x.start.getDate())
 							});
 						}else if('dates' in x && x.dates instanceof Array){
-							for(var n = 0;n < x.dates.length;n++){
+							x.dates.forEach(function(hlDate) {
 								highlightObj.dates.push({
-									start: new Date(x.dates[n].start.getFullYear(),x.dates[n].start.getMonth(),x.dates[n].start.getDate()),
-									end: ('end' in x.dates[n])?new Date(x.dates[n].end.getFullYear(),x.dates[n].end.getMonth(),x.dates[n].end.getDate()):new Date(x.dates[n].start.getFullYear(),x[i].dates[n].start.getMonth(),x[i].dates[n].start.getDate())
-								});
-							}
+									start: new Date(hlDate.start.getFullYear(),hlDate.start.getMonth(),hlDate.start.getDate()),
+									end: ('end' in hlDate)?new Date(hlDate.end.getFullYear(),hlDate.end.getMonth(),hlDate.end.getDate()):new Date(hlDate.start.getFullYear(),hlDate.start.getMonth(),hlDate.start.getDate())
+								});								
+							});
 						}
 
 						highlightObj.color 				= x.color;
