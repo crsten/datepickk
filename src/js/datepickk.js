@@ -444,7 +444,7 @@
 			date.setHours(0,0,0,0);
 			var el = that.el.querySelector('[data-date="'+ date.toJSON() +'"]');
 			
-			if(range && el.checked) {
+			if(range && el && el.checked) {
 				el.classList.add('single');
 			}
 
