@@ -440,6 +440,7 @@
 		};
 
 		function selectDate(date,ignoreOnSelect){
+			date = new Date(date);
 			date.setHours(0,0,0,0);
 			var el = that.el.querySelector('[data-date="'+ date.toJSON() +'"]');
 			
@@ -460,6 +461,7 @@
 		};
 
 		function unselectDate(date,ignoreOnSelect){
+			date = new Date(date);
 			date.setHours(0,0,0,0);
 			var el = that.el.querySelector('[data-date="'+ date.toJSON() +'"]');
 			if(el){
