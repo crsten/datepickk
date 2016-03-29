@@ -681,18 +681,17 @@
 			return new Date(currentYear,currentMonth-1,1);
 		}
 		function currentDateSetter(x){
-			if(x instanceof Date){
-				currentMonth = x.getMonth() + 1;
-				currentYear = x.getFullYear();
-				setDate();
-			}
+			x = new Date(x);
+			currentMonth = x.getMonth() + 1;
+			currentYear = x.getFullYear();
+			setDate();
 		}
 
 		Object.defineProperties(that,{
 			"selectedDates": { 
 				get: function () { 
 					return selectedDates.sort(function(a,b){return a.getTime() - b.getTime();}); 
-					} 
+				} 
 			},
 			"range": {
 				get: function() {
@@ -1021,8 +1020,8 @@
 					return startDate;
 				},
 				set: function(x){
-					if(x instanceof Date){
-						startDate = x;
+					if(x){
+						startDate = new Date(x);
 					}else{
 						startDate = null;
 						currentYear = new Date().getFullYear();
@@ -1036,11 +1035,7 @@
 					return minDate;
 				},
 				set: function(x){
-					if(x instanceof Date){
-						minDate = x;
-					}else{
-						minDate = null;
-					}
+					minDate = new Date(x);
 					setDate();
 				}
 			},
@@ -1049,11 +1044,7 @@
 					return maxDate;
 				},
 				set: function(x){
-					if(x instanceof Date){
-						maxDate = x;
-					}else{
-						maxDate = null;
-					}
+					maxDate = new Date(x);
 					setDate();
 				}
 			},
