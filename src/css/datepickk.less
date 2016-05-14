@@ -1,5 +1,6 @@
 /*Main color*/
 @color: #E95A5A; //change if you want different theme
+@green: #7DD076;
 
 @spin: -15;
 
@@ -55,7 +56,7 @@
 			animation-direction: reverse;
 		}
 	}
-	
+
 	.d-overlay{
 		position: absolute;
 		top: 0;
@@ -133,7 +134,7 @@
 			animation: none;
 		}
 	}
-	
+
 	&.inline,&.wrapped{
 		position: static;
 		z-index: 0;
@@ -164,7 +165,7 @@
 		.d-calendar{
 				max-width: none;
 				max-height: none;
-			
+
 				input + label{
 					outline: 1px solid #eaeaea;
 					box-sizing: border-box;
@@ -217,7 +218,7 @@
 				display:inline-block;
 				margin-right:10px;
 			}
-		} 
+		}
 	}
 
 	.d-calendar{
@@ -257,7 +258,7 @@
 			border-radius: 100%;
 			transition: background-color .2s ease;
 			transform:translateY(-50%);
-			
+
 			&:before,&:after{
 				content: '';
 			    width: 0;
@@ -351,7 +352,7 @@
 			line-height: 44px;
 			color:contrast(fade(#1B363F,90%),black,white);
 			cursor:pointer;
-			
+
 			&:hover,&:focus{
 				background-color: darken(@color,10%);
 				color:contrast(darken(@color,10%),black,white);
@@ -385,7 +386,7 @@
 			line-height: 44px;
 			color:contrast(fade(#1B363F,90%),black,white);
 			cursor:pointer;
-			
+
 			&:hover,&:focus{
 				background-color: darken(@color,10%);
 				color:contrast(darken(@color,10%),black,white);
@@ -397,7 +398,7 @@
 			}
 		}
 	}
-	
+
 	.d-weekdays{
 		display: flex;
 	}
@@ -410,7 +411,7 @@
   		& + .d-week{
   			border-left:1px solid rgba(255,255,255,0.05);
   		}
-  		
+
   		& > div{
   			flex-basis: calc(100% ~"/" 7);
   			text-align: center;
@@ -445,7 +446,7 @@
 	    label:nth-last-of-type(-n + 7) .d-date-legends{
 	    	padding-bottom:0;
 	    }
-		
+
 		input{
 
 			display: none;
@@ -485,11 +486,12 @@
 				&:before{
 					content: '';
 					position: absolute;
-					top: 0;
-					left: 0;
-					width: 100%;
-					height: 100%;
-					background-color: fade(spin(@color,@spin),50%);
+					top: 12.5%;
+					left: 12.5%;
+					width: 75%;
+					height: 75%;
+					border-radius: 5px;
+					background-color: @green;
 					transition: transform 0.1s ease-out;
 					transform: scaleX(0);
 					transform-origin: left;
@@ -634,12 +636,12 @@
 
 							&:before{
 								transform:scaleX(1);
-								background-color: fade(spin(@color,@spin),30%);
+								background-color: fade(@green,50%);
 							}
 						}
 
 					}
-					
+
 					& ~ label:hover ~ label,& ~ label:focus ~ label{
 						&:before{
 							transform:scaleX(0);
@@ -652,12 +654,12 @@
 					}
 
 					& ~ input:checked + label{
-						
+
 						color:contrast(@color,white,#666);
 
 						&:before{
 							transform:scaleX(1);
-							background-color: fade(spin(@color,@spin),50%);
+							background-color: @green;
 						}
 
 						& ~ label{
@@ -699,7 +701,7 @@
 			}
 		}
 	}
-	
+
 	.d-fadeInUp {
 	  backface-visibility: visible !important;
 	  animation-name: DatepickfadeInUp;
@@ -750,12 +752,3 @@
 		transform: translateY(50px);
 	}
 }
-
-
-
-
-
-
-
-
-
