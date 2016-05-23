@@ -4,7 +4,7 @@
  * (c) 2016 Carsten Jacobsen
  */
 (function(){
-	
+
 	function Datepickk(args){
 		Datepickk.numInstances = (Datepickk.numInstances || 0) + 1;
 		var that = this;
@@ -31,7 +31,7 @@
 				weekStart:1
 			}
 		};
-		
+
 		var range = false;
 		var maxSelections = null;
 		var container = document.body;
@@ -40,6 +40,7 @@
 		var closeOnSelect = false;
 		var button = null;
 		var title = null;
+		var onNavigation = null;
 		var onClose = null;
 		var onConfirm = null;
 		var closeOnClick = true;
@@ -56,7 +57,7 @@
 		var minDate = null;
 		var maxDate = null;
 		var locked = false;
-		
+
 		function generateDaynames(){
 			that.el.days.innerHTML = '';
 			if(daynames){
@@ -79,7 +80,7 @@
 
 		function generateYears(){
 			[].slice.call(that.el.yearPicker.childNodes).forEach(function(node,index) {
-				node.innerHTML = "'" + (currentYear + parseInt(node.getAttribute('data-year'))).toString().substring(2,4);								
+				node.innerHTML = "'" + (currentYear + parseInt(node.getAttribute('data-year'))).toString().substring(2,4);
 			})
 		}
 
@@ -110,7 +111,7 @@
 					input.addEventListener(eventName,function(){
 						if(locked){
 							event.preventDefault();
-						}	
+						}
 					});
 					input.addEventListener('change',inputChange);
 				}
@@ -131,7 +132,7 @@
 					var element = that.el.legend.querySelector('[data-legend-id="' + legendId + '"]');
 					if(e.type == 'mouseover' && element){
 						var color = (element.getAttribute('data-color'))?hexToRgb(element.getAttribute('data-color')):null;
-						element.setAttribute('style','background-color:rgba(' + color.r + ',' + color.g + ',' + color.b + ',0.35);');	
+						element.setAttribute('style','background-color:rgba(' + color.r + ',' + color.g + ',' + color.b + ',0.35);');
 					}else if(element){
 						element.removeAttribute('style');
 					}
@@ -183,7 +184,7 @@
 					}
 				}
 			}
-			
+
 			[].slice.call(that.el.legend.querySelectorAll('.d-legend-item')).forEach(function(item) {
 				if(legends.indexOf(item) < 0){
 					item.removeEventListener('mouseover',hoverLegend);
@@ -195,7 +196,7 @@
 			function hoverLegend(e){
 				[].slice.call(that.el.tables.querySelectorAll('[data-legend-id*="' + this.getAttribute('data-legend-id') + '"]')).forEach(function(element) {
 					if(e.type == 'mouseover') element.classList.add('legend-hover');
-					else element.classList.remove('legend-hover');				
+					else element.classList.remove('legend-hover');
 				});
 			}
 		}
@@ -262,7 +263,7 @@
 
 					if(date instanceof Date){
 						inputEl.setAttribute('data-date',date.toJSON());
-					
+
 						if(disabledDates.indexOf(date.getTime()) != -1 || disabledDays.indexOf(date.getDay()) != -1){
 							inputEl.setAttribute('disabled',true);
 						}
@@ -270,7 +271,7 @@
 						if((minDate && date < minDate) || (maxDate && date > maxDate)){
 							inputEl.setAttribute('disabled',true);
 							labelEl.className = 'd-hidden';
-								
+
 						}
 
 						if(today && date.getTime() == new Date().setHours(0,0,0,0)){
@@ -392,8 +393,9 @@
 			if(currentMonth-1+months-1>11){
 				that.el.yearPicker.querySelector('[data-year="1"]').classList.add('current');
 			}
-			
+
 			renderSelectedDates();
+			if(onNavigation) onNavigation.call(that);
 		};
 
 		function renderSelectedDates(){
@@ -443,7 +445,7 @@
 			date = new Date(date);
 			date.setHours(0,0,0,0);
 			var el = that.el.querySelector('[data-date="'+ date.toJSON() +'"]');
-			
+
 			if(range && el && el.checked) {
 				el.classList.add('single');
 			}
@@ -478,7 +480,7 @@
 
 		function unselectAll(ignoreOnSelect){
 			selectedDates.forEach(function(date) {
-				unselectDate(date,ignoreOnSelect);				
+				unselectDate(date,ignoreOnSelect);
 			});
 		};
 
@@ -496,18 +498,18 @@
 					for(length; length > maxSelections-1; length --){
 						unselectDate(selectedDates[0]);
 					}
-					
+
 				}
-				
+
 				if(range && selectedDates.length){
 					var first = that.el.querySelector('[data-date="'+ selectedDates[0].toJSON() +'"]');
 					if(!first && date > selectedDates[0]){
 						that.el.tables.classList.add('before');
 					}
 				}
-				
+
 				selectedDates.push(date);
-				
+
 				if(closeOnSelect){
 					that.hide();
 				}
@@ -601,7 +603,7 @@
 					currentMonth = parseInt(this.getAttribute('data-month'));
 					setDate();
 					that.el.monthPicker.classList.remove('d-show');
-				});				
+				});
 			});
 
 			[].slice.call(that.el.yearPicker.childNodes).forEach(function(yearPicker) {
@@ -609,7 +611,7 @@
 					currentYear += parseInt(this.getAttribute('data-year'));
 					setDate();
 					that.el.yearPicker.classList.remove('d-show');
-				});				
+				});
 			})
 
 			var startX = 0;
@@ -690,10 +692,10 @@
 		}
 
 		Object.defineProperties(that,{
-			"selectedDates": { 
-				get: function () { 
-					return selectedDates.sort(function(a,b){return a.getTime() - b.getTime();}); 
-				} 
+			"selectedDates": {
+				get: function () {
+					return selectedDates.sort(function(a,b){return a.getTime() - b.getTime();});
+				}
 			},
 			"range": {
 				get: function() {
@@ -776,7 +778,7 @@
 				},
 				set: function(x){
 					if(x){
-						closeOnSelect = true; 
+						closeOnSelect = true;
 					}else{
 						closeOnSelect = false;
 					}
@@ -810,7 +812,7 @@
 						x.forEach(function(date) {
 							if(date instanceof Date){
 								disabledDates.push(new Date(date.getFullYear(),date.getMonth(),date.getDate()).getTime());
-							}							
+							}
 						});
 					}else if(x instanceof Date){
 						disabledDates = [new Date(x.getFullYear(),x.getMonth(),x.getDate()).getTime()];
@@ -866,7 +868,7 @@
 								highlightObj.dates.push({
 									start: new Date(hlDate.start.getFullYear(),hlDate.start.getMonth(),hlDate.start.getDate()),
 									end: ('end' in hlDate)?new Date(hlDate.end.getFullYear(),hlDate.end.getMonth(),hlDate.end.getDate()):new Date(hlDate.start.getFullYear(),hlDate.start.getMonth(),hlDate.start.getDate())
-								});								
+								});
 							});
 						}
 
@@ -967,6 +969,15 @@
 					}else if(!callback){
 						that.el.button.removeEventListener(eventName,onConfirm);
 						onConfirm = null;
+					}
+				}
+			},
+			"onNavigation": {
+				set: function(callback){
+					if(typeof callback == 'function'){
+						onNavigation = callback.bind(that);
+					}else if(!callback){
+						onNavigation = null;
 					}
 				}
 			},
@@ -1141,8 +1152,8 @@
 							'<div data-month="10">10</div>' +
 							'<div data-month="11">11</div>' +
 							'<div data-month="12">12</div>' +
-						'</div>' + 
-						'<div class="d-year-picker">' + 
+						'</div>' +
+						'<div class="d-year-picker">' +
 							'<div data-year="-5"></div>' +
 							'<div data-year="-4"></div>' +
 							'<div data-year="-3"></div>' +
@@ -1157,9 +1168,9 @@
 						'</div>' +
 						'<div class="d-weekdays"></div>' +
 						'<div class="d-tables"></div>' +
-					'</div>' + 
+					'</div>' +
 					'<div class="d-legend"></div>' +
-					'<button class="d-confirm"></button>' + 
+					'<button class="d-confirm"></button>' +
 					'<div class="d-overlay"></div>';
 
 	var getBrowserVersion =  function(){

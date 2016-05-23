@@ -154,14 +154,15 @@
 					<li><a href="#onConfirm">onConfirm</a></li>
 					<li><a href="#onClose">onClose</a></li>
 					<li><a href="#onSelect">onSelect</a></li>
+					<li><a href="#onNavigation">onNavigation</a></li>
 				</ul>
 			</div>
 		</div>
-		
+
 		<h1 class="center"><span class="line"></span>Take a tour<span class="line"></span></h1>
 
 		<div class="row equal-height">
-			
+
 			<div class="col-xs-12 col-md-6 block" id="startDate">
 				<h2>startDate <span>Setting</span> <a href="#index">Go up</a></h2>
 				<pre>
@@ -322,7 +323,7 @@
 					</code>
 				</pre>
 				<button class="grey full" onclick="monthsDemo()">Let's try that</button>
-				<p><i class="fa fa-lightbulb-o hint"></i>Showing multiple months at once needs much space! Be careful, the pretty looking datepicker might get ulgy <i class="fa fa-thumbs-o-down"></i></p> 
+				<p><i class="fa fa-lightbulb-o hint"></i>Showing multiple months at once needs much space! Be careful, the pretty looking datepicker might get ulgy <i class="fa fa-thumbs-o-down"></i></p>
 				<script>
 					function monthsDemo(){
 						datepicker.unselectAll();
@@ -781,7 +782,7 @@
 					}
 				</script>
 			</div>
-			
+
 			<div class="col-xs-12 col-md-6 block" id="today">
 				<h2>today <span>Setting</span> <a href="#index">Go up</a></h2>
 				<p class="description">Show little line on todays date</p>
@@ -1009,7 +1010,7 @@
 					}
 				</script>
 			</div>
-			
+
 			<div class="col-xs-12 col-md-6 block" id="unselectAll">
 				<h2>unselectAll( ignoreOnSelectEvent ) <span>Function</span> <a href="#index">Go up</a></h2>
 				<pre>
@@ -1106,6 +1107,31 @@
 					}
 				</script>
 			</div>
+
+			<div class="col-xs-12 col-md-6 block" id="onNavigation">
+				<h2>onNavigation <span>Callback</span> <a href="#index">Go up</a></h2>
+				<pre>
+					<code>
+						//Type: Function<br>
+						datepicker.onNavigation = function(){<br>
+							alert('Navigation happened!')<br>
+						};
+					</code>
+				</pre>
+				<button class="grey full" onclick="onNavigationDemo()">Let's try that</button>
+				<p><i class="fa fa-lightbulb-o hint"></i>The context(this) is the datepicker object.</p>
+				<script>
+					function onNavigationDemo(){
+						datepicker.onNavigation = function(){
+							alert('Navigation happened!');
+						};
+						datepicker.onClose = function(){
+							datepicker.onNavigation = null;
+						};
+						datepicker.show();
+					}
+				</script>
+			</div
 
 		</div>
 
