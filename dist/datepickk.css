@@ -340,13 +340,12 @@
           justify-content: space-between;
   background-color: rgba(27, 54, 63, 0.9);
   height: 0;
-  opacity: 1;
+  overflow: hidden;
   pointer-events: none;
   transition: height .2s ease;
 }
 #Datepickk .d-month-picker.d-show {
   height: 44px;
-  opacity: 1;
   pointer-events: auto;
 }
 #Datepickk .d-month-picker > div {
@@ -374,13 +373,12 @@
           justify-content: space-between;
   background-color: rgba(27, 54, 63, 0.9);
   height: 0;
-  opacity: 1;
+  overflow: hidden;
   pointer-events: none;
   transition: height .2s ease;
 }
 #Datepickk .d-year-picker.d-show {
   height: 44px;
-  opacity: 1;
   pointer-events: auto;
 }
 #Datepickk .d-year-picker > div {
