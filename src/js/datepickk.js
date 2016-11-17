@@ -1048,7 +1048,7 @@
 					return minDate;
 				},
 				set: function(x){
-					minDate = new Date(x);
+					minDate = (x) ? new Date(x) : null ;
 					setDate();
 				}
 			},
@@ -1057,7 +1057,7 @@
 					return maxDate;
 				},
 				set: function(x){
-					maxDate = new Date(x);
+					maxDate = (x) ? new Date(x) : null ;
 					setDate();
 				}
 			},
