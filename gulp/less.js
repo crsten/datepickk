@@ -1,6 +1,6 @@
 var gulp = require('gulp');
 var less = require('gulp-less');
-var minifyCss = require('gulp-minify-css');
+var cssnano = require('gulp-cssnano');
 var sourcemaps = require('gulp-sourcemaps');
 var rename = require('gulp-rename');
 var autoprefixer = require('gulp-autoprefixer');
@@ -21,7 +21,7 @@ gulp.task('less',function(){
         browsers: ['last 2 versions'],
         cascade: false
     }))
-	.pipe(minifyCss())
+	.pipe(cssnano())
 	.pipe(rename({
 		suffix: '.min'
 	}))
