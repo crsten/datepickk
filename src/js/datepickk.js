@@ -32,6 +32,10 @@
 			}
 		};
 
+		/*Language aliases*/
+		languages.nb = languages.no;
+		languages.nn = languages.no;
+
 		var range = false;
 		var maxSelections = null;
 		var container = document.body;
