@@ -112,7 +112,7 @@
 					label.appendChild(text);
 					label.appendChild(tooltip);
 
-					input.addEventListener(eventName,function(){
+					input.addEventListener(eventName,function(event){
 						if(locked){
 							event.preventDefault();
 						}
