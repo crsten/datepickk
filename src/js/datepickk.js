@@ -17,7 +17,7 @@
 		var languages = {
 			no: {
 				monthNames:['Januar','Februar','Mars','April','Mai','Juni','Juli','August','September','Oktober','November','Desember'],
-				dayNames:['ma','ti','on','to','fr','lø','sø'],
+				dayNames:['sø','ma','ti','on','to','fr','lø'],
 				weekStart:1
 			},
 			en: {
@@ -27,7 +27,7 @@
 			},
 			de: {
 				monthNames:['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'],
-				dayNames:['Mo','Di','Mi','Do','Fr','Sa','So'],
+				dayNames:['So','Mo','Di','Mi','Do','Fr','Sa'],
 				weekStart:1
 			}
 		};
@@ -60,18 +60,22 @@
 		var startDate = null;
 		var minDate = null;
 		var maxDate = null;
+		var weekStart = null;
 		var locked = false;
 
 		function generateDaynames(){
 			that.el.days.innerHTML = '';
+			var ws = (weekStart !== null) ? weekStart : languages[lang].weekStart;
 			if(daynames){
 				for(var x = 0;x<months && x<3;x++){
 					var weekEl = document.createElement('div');
 						weekEl.setAttribute('class','d-week');
 					for(var i = 0; i < 7;i++){
+						var dayNameIndex = (i + ws > languages[lang].dayNames.length - 1) ? i + ws - languages[lang].dayNames.length : i + ws;
+
 						var dayEl = document.createElement('div');
 						var	dayTextEl = document.createElement('p');
-							dayTextEl.innerHTML = languages[lang].dayNames[i];
+							dayTextEl.innerHTML = languages[lang].dayNames[dayNameIndex];
 
 							dayEl.appendChild(dayTextEl);
 							weekEl.appendChild(dayEl);
@@ -213,7 +217,7 @@
 
 		function generateDates(year,month){
 			var monthElements = that.el.querySelectorAll('.d-table');
-			var weekStart = languages[lang].weekStart;
+			var ws = (weekStart !== null) ? weekStart : languages[lang].weekStart;
 
 			[].slice.call(that.el.querySelectorAll('.d-table')).forEach(function(element, index) {
 				var days = new Date(year,month + index,0).getDate();
@@ -221,10 +225,10 @@
 				var startDay = new Date(year,month + index - 1,1).getDay();
 				var startDate = null;
 				var endDate = null;
-				if(startDay - weekStart < 0){
-					startDay = 7 - weekStart;
+				if(startDay - ws < 0){
+					startDay = 7 - ws;
 				}else{
-					startDay -= weekStart;
+					startDay -= ws;
 				}
 				var monthText = languages[lang].monthNames[parseMonth(month - 1 + index)];
 				element.setAttribute('data-month',monthText);
@@ -747,6 +751,20 @@
 						setDate();
 					}else{
 						console.error('Language not found');
+					}
+				}
+			},
+			"weekStart": {
+				get: function(){
+					return (weekStart !== null) ? weekStart : languages[lang].weekStart;
+				},
+				set: function(x){
+					if(typeof x == 'number' && x > -1 && x < 7){
+						weekStart = x;
+						generateDaynames();
+						setDate();
+					}else{
+						console.error('weekStart must be a number between 0 and 6');
 					}
 				}
 			},

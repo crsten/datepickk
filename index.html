@@ -116,6 +116,7 @@
 					<li><a href="#title">title</a></li>
 					<li><a href="#button">button</a></li>
 					<li><a href="#lang">lang</a></li>
+					<li><a href="#weekStart">weekStart</a></li>
 					<li><a href="#range">range</a></li>
 					<li><a href="#container">container</a></li>
 					<li><a href="#inline">inline</a></li>
@@ -419,6 +420,36 @@
 						console.log(datepicker.lang);
 						datepicker.onClose = function(){
 							datepicker.lang = 'en';
+							datepicker.onClose = null;
+						}
+						datepicker.show();
+					}
+				</script>
+			</div>
+
+			<div class="col-xs-12 col-md-6 block" id="weekStart">
+				<h2>weekStart <span>Setting</span> <a href="#index">Go up</a></h2>
+				<p class="description">
+					You can change when the week should start by setting the weekStart property to a number between 0 - 6 where 0 is sunday and 6 is saturday.
+					The languages have the weekStart predefined. So if you choose norwegian it will automatically start the week on monday if no weekStart has been set.
+				</p>
+				<pre>
+					<code>
+						//Type: Number<br>
+						//Default: from language<br><br>
+						/*Set weekStart*/<br>
+						datepicker.weekStart = 1; //week starts at monday<br><br>
+						/*Get weekStart*/<br>
+						console.log(datepicker.weekStart);
+					</code>
+				</pre>
+				<button class="grey full" onclick="weekStartDemo()">Let's try that</button>
+				<script>
+					function weekStartDemo(){
+						datepicker.weekStart = 1;
+						console.log(datepicker.weekStart);
+						datepicker.onClose = function(){
+							datepicker.weekStart = 0;
 							datepicker.onClose = null;
 						}
 						datepicker.show();
