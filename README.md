@@ -5,15 +5,15 @@
 [![npm](https://img.shields.io/npm/v/datepickk.svg?style=flat-square)](https://www.npmjs.com/package/datepickk)
 ![npm](https://img.shields.io/npm/l/datepickk.svg?style=flat-square)
 
-##Inspiration
+## Inspiration
 
 I got tired of using ugly datepickers and jQuery so i decided to build my own. Have fun :)
 
-##Demo & Docs
+## Demo & Docs
 
 You can find [demo & docs here](http://crsten.github.io/datepickk/).
 
-##Installation
+## Installation
 
 You can get it on npm.
 
