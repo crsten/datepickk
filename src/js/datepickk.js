@@ -20,6 +20,11 @@
 				dayNames:['sø','ma','ti','on','to','fr','lø'],
 				weekStart:1
 			},
+			se: {
+				monthNames:['januari','februari','mars','april','maj','juni','juli','augusti','september','oktober','november','december'],
+				dayNames:['sö','må','ti','on','to','fr','lö'],
+				weekStart:1
+			},
 			en: {
 				monthNames:['january','february','march','april','may','june','july','august','september','october','november','december'],
 				dayNames:['su','mo','tu','we','th','fr','sa'],
