@@ -25,6 +25,11 @@
 				dayNames:['sö','må','ti','on','to','fr','lö'],
 				weekStart:1
 			},
+			ru: {
+				monthNames:['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'],
+				dayNames:['вс','пн','вт','ср','чт','пт','сб'],
+				weekStart:1
+			},
 			en: {
 				monthNames:['january','february','march','april','may','june','july','august','september','october','november','december'],
 				dayNames:['su','mo','tu','we','th','fr','sa'],
