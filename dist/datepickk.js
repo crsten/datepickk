@@ -29,7 +29,12 @@
 				monthNames:['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'],
 				dayNames:['So','Mo','Di','Mi','Do','Fr','Sa'],
 				weekStart:1
-			}
+			},
+			ru: {
+				monthNames:['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'],
+				dayNames:['вс','пн','вт','ср','чт','пт','сб'],
+				weekStart:1
+			},
 		};
 
 		/*Language aliases*/
