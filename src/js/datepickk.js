@@ -927,6 +927,11 @@
 				set: function(x){
 					var nextId = 0;
 					var idList = {};
+          highlight.forEach(function(hl) {
+						const key = (hl.legend || '') + '|' + (hl.backgroundColor || '') + '|' + (hl.color || '');
+						idList[key] = hl.id;
+            if (hl.id >= nextId) nextId = hl.id + 1;
+          });
 					if(x instanceof Array){
 						x.forEach(function(hl) {
 							if(hl instanceof Object){
