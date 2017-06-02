@@ -1,7 +1,7 @@
 /*!
  * Datepickk
  * Docs & License: https://crsten.github.com/datepickk
- * (c) 2016 Carsten Jacobsen
+ * (c) 2016-17 Carsten Jacobsen
  */
 (function(){
 
@@ -74,57 +74,65 @@
 		var locked = false;
 
 		function generateDaynames(){
-			that.el.days.innerHTML = '';
-			var ws = (weekStart !== null) ? weekStart : languages[lang].weekStart;
-			if(daynames){
-				for(var x = 0;x<months && x<3;x++){
-					var weekEl = document.createElement('div');
-						weekEl.setAttribute('class','d-week');
+			var aTables = [].slice.call(that.el.tables.getElementsByClassName('d-table-head'));
+			aTables.forEach(function(parent) {
+				var weeks = parent.getElementsByClassName("d-week");
+				if (! weeks.length) {
+					var el = document.createElement('div');
+					el.setAttribute('class', 'd-week');
+					parent.appendChild(el);
+				}
+				var weekEl = weeks[0];
+				weekEl.innerHTML = '';
+				var ws = (weekStart !== null) ? weekStart : languages[lang].weekStart;
+				if(daynames){
 					for(var i = 0; i < 7;i++){
 						var dayNameIndex = (i + ws > languages[lang].dayNames.length - 1) ? i + ws - languages[lang].dayNames.length : i + ws;
-
 						var dayEl = document.createElement('div');
 						var	dayTextEl = document.createElement('p');
 							dayTextEl.innerHTML = languages[lang].dayNames[dayNameIndex];
-
 							dayEl.appendChild(dayTextEl);
 							weekEl.appendChild(dayEl);
 					}
-
-					that.el.days.appendChild(weekEl);
 				}
-			}
+			});
 		}
 
 		function generateYears(){
 			[].slice.call(that.el.yearPicker.childNodes).forEach(function(node,index) {
 				node.innerHTML = "'" + (currentYear + parseInt(node.getAttribute('data-year'))).toString().substring(2,4);
-			})
+			});
 		}
 
 		function generateInputs(){
 			that.el.tables.innerHTML = '';
 			for(var x = 0;x<months;x++){
+				var l1 = document.createElement('div');
+				that.el.tables.appendChild(l1);
+				l1.setAttribute('class', 'd-table-head');
+				generateDaynames();
+				var month = document.createElement('div');
+				month.setAttribute('class', 'd-month');
+				l1.appendChild(month);
+				var l2 = document.createElement('div');
+				l1.appendChild(l2);
+				l2.setAttribute('class', 'd-table-container');
 				var container = document.createElement('div');
+				l2.appendChild(container);
 					container.setAttribute('class','d-table');
 				for(var i = 0;i<42;i++){
 					var input = document.createElement('input');
+					container.appendChild(input);
 						input.type = 'checkbox';
 						input.id   = Datepickk.numInstances + '-' + x + '-d-day-' + i;
 					var label = document.createElement('label');
-						label.setAttribute("for",Datepickk.numInstances + '-' + x + '-d-day-' + i);
-
-					var text = document.createElement('text');
-
-					var tooltip = document.createElement('span');
-						tooltip.setAttribute('class','d-tooltip');
-
-
-					container.appendChild(input);
 					container.appendChild(label);
-
+						label.setAttribute("for",Datepickk.numInstances + '-' + x + '-d-day-' + i);
+					var text = document.createElement('text');
 					label.appendChild(text);
+					var tooltip = document.createElement('span');
 					label.appendChild(tooltip);
+						tooltip.setAttribute('class','d-tooltip');
 
 					input.addEventListener(eventName,function(event){
 						if(locked){
@@ -133,8 +141,13 @@
 					});
 					input.addEventListener('change',inputChange);
 				}
-
-				that.el.tables.appendChild(container);
+			}
+			// workaround until flex2 to prevent ugly last row with oversized items, see:
+			//   https://stackoverflow.com/questions/28074473/how-can-i-allow-flex-items-to-grow-while-keeping-the-same-size/28076932#28076932
+			for (var y = 0; y < months; y++) {
+				const filler = document.createElement('span');
+				filler.className = 'd-hidden';
+				that.el.tables.appendChild(filler);
 			}
 
 			that.el.tables.addEventListener('mouseover',highlightLegend);
@@ -150,26 +163,38 @@
 					var element = that.el.legend.querySelector('[data-legend-id="' + legendId + '"]');
 					if(e.type == 'mouseover' && element){
 						var color = (element.getAttribute('data-color'))?hexToRgb(element.getAttribute('data-color')):null;
-						element.setAttribute('style','background-color:rgba(' + color.r + ',' + color.g + ',' + color.b + ',0.35);');
+						if (color) element.setAttribute('style','background-color:rgba(' + color.r + ',' + color.g + ',' + color.b + ',0.35);');
 					}else if(element){
 						element.removeAttribute('style');
 					}
 				});
 
 				function hexToRgb(hex) {
-				    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-				    return result ? {
-				        r: parseInt(result[1], 16),
-				        g: parseInt(result[2], 16),
-				        b: parseInt(result[3], 16)
-				    } : null;
+					if (hex.length === 7) {
+						var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+						return result ? {
+							r: parseInt(result[1], 16),
+							g: parseInt(result[2], 16),
+							b: parseInt(result[3], 16)
+						} : null;
+					} else if (hex.length === 4) {
+						var result2 = /^#?([a-f\d])([a-f\d])([a-f\d])$/i.exec(hex);
+						return result2 ? {
+							r: parseInt(result2[1], 16),
+							g: parseInt(result2[2], 16),
+							b: parseInt(result2[3], 16)
+						} : null;
+					} else {
+						return null;
+					}
 				}
 			}
 		}
 
 		function generateLegends(){
-			var start = new Date(that.el.tables.childNodes[0].childNodes[0].getAttribute('data-date'));
-			var end = new Date(that.el.tables.childNodes[months-1].childNodes[82].getAttribute('data-date'));
+			const idx = 2; // that.el.tables.childNodes[0].childNodes.length - 1;
+			var start = new Date(that.el.tables.childNodes[0].childNodes[idx].childNodes[0].childNodes[0].getAttribute('data-date'));
+			var end = new Date(that.el.tables.childNodes[months - 1].childNodes[idx].childNodes[0].childNodes[82].getAttribute('data-date'));
 			var _highlights = highlight.filter(function(x){
 				for(var m = 0;m < x.dates.length;m++){
 					if(x.dates[m].start < end && x.dates[m].end > start){
@@ -186,7 +211,7 @@
 						var legendItem = document.createElement('p');
 							legendItem.setAttribute('class','d-legend-item');
 							legendItem.setAttribute('data-legend',_highlights[l].legend);
-							legendItem.setAttribute('data-legend-id',highlight.indexOf(_highlights[l]));
+							legendItem.setAttribute('data-legend-id', _highlights[l].id);
 							legendItem.setAttribute('data-color',_highlights[l].backgroundColor);
 						var legendItemPoint = document.createElement('span');
 							legendItemPoint.setAttribute('style','background-color:' + _highlights[l].backgroundColor);
@@ -226,22 +251,22 @@
 		}
 
 		function generateDates(year,month){
-			var monthElements = that.el.querySelectorAll('.d-table');
+			var months = that.el.querySelectorAll('.d-table-head').length;
 			var ws = (weekStart !== null) ? weekStart : languages[lang].weekStart;
 
-			[].slice.call(that.el.querySelectorAll('.d-table')).forEach(function(element, index) {
+			[].slice.call(that.el.querySelectorAll('.d-table-head')).forEach(function(element, index) {
+				var date = new Date(Date.UTC(year, month + index - 1, 1));
 				var days = new Date(year,month + index,0).getDate();
 				var daysLast = new Date(year,month + index - 1,0).getDate();
 				var startDay = new Date(year,month + index - 1,1).getDay();
-				var startDate = null;
-				var endDate = null;
 				if(startDay - ws < 0){
 					startDay = 7 - ws;
 				}else{
 					startDay -= ws;
 				}
+				element.setAttribute('data-ym', date.toJSON().substr(0, 7));
 				var monthText = languages[lang].monthNames[parseMonth(month - 1 + index)];
-				element.setAttribute('data-month',monthText);
+				element.childNodes[element.childNodes.length - 2].setAttribute('data-month', monthText);
 
 				[].slice.call(element.querySelectorAll('.d-table input')).forEach(function(inputEl,i) {
 					var labelEl = inputEl.nextSibling;
@@ -269,7 +294,7 @@
 						labelEl.className = '';
 					}else{
 						labelEl.childNodes[0].innerHTML = i - days - startDay + 1;
-						if(index == monthElements.length-1){
+						if(index == months-1){
 							date = new Date(year,month + index,i - days - startDay + 1);
 							labelEl.className = 'next';
 						}else{
@@ -287,9 +312,8 @@
 						}
 
 						if((minDate && date < minDate) || (maxDate && date > maxDate)){
-							inputEl.setAttribute('disabled',true);
 							labelEl.className = 'd-hidden';
-
+							inputEl.setAttribute('disabled',true);
 						}
 
 						if(today && date.getTime() == new Date().setHours(0,0,0,0)){
@@ -324,8 +348,7 @@
 								var percent = Math.round(100 / _highlights.length);
 								bgColor = 'background: linear-gradient(-45deg,';
 								for(var z = 0;z < _highlights.length;z++){
-									legendIds += highlight.indexOf(_highlights[z]);
-									if(z !== _highlights.length -1){legendIds += ' ';}
+									legendIds += _highlights[z].id + ' ';
 									bgColor += _highlights[z].backgroundColor + ' ' + (percent*z) + '%';
 									if(z != _highlights.length - 1){
 										bgColor += ',';
@@ -335,7 +358,7 @@
 								bgColor += ');';
 							}else{
 								bgColor = (_highlights[0].backgroundColor)?'background:'+ _highlights[0].backgroundColor + ';':'';
-								legendIds += highlight.indexOf(_highlights[0]);
+								legendIds += _highlights[0].id + ' ';
 							}
 							var Color = (_highlights[0].color)?'color:'+ _highlights[0].color + ';':'';
 							labelEl.setAttribute('style',bgColor + Color);
@@ -349,7 +372,7 @@
 		};
 
 		function setDate(){
-			if(!that.el.tables.childNodes.length || !that.el.tables.childNodes[0].childNodes.length) return;
+			if(!that.el.tables.childNodes.length) return;
 
 			resetCalendar();
 
@@ -423,16 +446,7 @@
 					el.checked = true;
 				}
 			});
-
-			that.el.tables.classList.remove('before');
-			if(range && selectedDates.length > 1){
-				var currentDate = new Date(currentYear,currentMonth-1,1);
-				var sorted = selectedDates.sort(function(a,b){return a.getTime()-b.getTime()});
-				var first = that.el.querySelector('[data-date="'+ sorted[0].toJSON() +'"]');
-				if(!first && currentDate >= new Date(sorted[0].getFullYear(),sorted[0].getMonth(),1) && currentDate <= new Date(sorted[1].getFullYear(),sorted[1].getMonth(),1)){
-					that.el.tables.classList.add('before');
-				}
-			}
+			updateRange();
 		};
 
 		function resetCalendar(){
@@ -459,89 +473,144 @@
 			setDate();
 		};
 
-		function selectDate(date,ignoreOnSelect){
+		function selectDate(date, ignoreOnSelect) {
 			date = new Date(date);
-			date.setHours(0,0,0,0);
-			var el = that.el.querySelector('[data-date="'+ date.toJSON() +'"]');
+			date.setHours(0, 0, 0, 0);
 
-			if(range && el && el.checked) {
-				el.classList.add('single');
+			var el = that.el.querySelector('[data-date="' + date.toJSON() + '"]');
+			if (el) {
+				if (range) {
+					el.classList.add(selectedDates.length > 0 ? 'd-end' : 'd-start');
+				}
+				if (! el.checked) {
+					el.checked = true;
+				}
 			}
-
-			if(el && !el.checked){
-				el.checked = true;
-			}
-
 
 			selectedDates.push(date);
 
-			if(onSelect && !ignoreOnSelect){
-				onSelect.apply(date,[true]);
+			if (onSelect && !ignoreOnSelect) {
+				onSelect.apply(date, [true]);
 			}
 		};
 
-		function unselectDate(date,ignoreOnSelect){
+		function unselectDate(date, ignoreOnSelect) {
 			date = new Date(date);
-			date.setHours(0,0,0,0);
-			var el = that.el.querySelector('[data-date="'+ date.toJSON() +'"]');
-			if(el){
-				el.classList.remove('single');
-				if(el.checked){el.checked = false;}
+			date.setHours(0, 0, 0, 0);
+
+			var el = that.el.querySelector('[data-date="' + date.toJSON() + '"]');
+			if (el) {
+				if (range) {
+					el.classList.remove('d-start');
+					el.classList.remove('d-end');
+				}
+				if (el.checked) {
+					el.checked = false;
+				}
 			}
 
-			selectedDates = selectedDates.filter(function(x){return x.getTime() != date.getTime()});
+			selectedDates = selectedDates.filter(function (x) {
+				return x.getTime() != date.getTime();
+			});
 
-			if(onSelect && !ignoreOnSelect){
-				onSelect.call(date,false);
+			if (onSelect && !ignoreOnSelect) {
+				onSelect.call(date, false);
 			}
 		};
 
 		function unselectAll(ignoreOnSelect){
-			selectedDates.forEach(function(date) {
-				unselectDate(date,ignoreOnSelect);
-			});
+			while (selectedDates.length > 0) {
+				unselectDate(selectedDates[0], ignoreOnSelect);
+			}
 		};
 
+		function updateRange() {
+			var startObj = null;
+			var endObj = null;
+			if (range) {
+				if (selectedDates.length > 1) {
+					startObj = selectedDates[1].getTime() > selectedDates[0].getTime() ? selectedDates[0] : selectedDates[1];
+					endObj = selectedDates[1].getTime() > selectedDates[0].getTime() ? selectedDates[1] : selectedDates[0];
+				} else if (selectedDates.length > 0) {
+					startObj = selectedDates[0];
+				}
+			}
+			var start = startObj ? startObj.toJSON().substr(0, 7) : null;
+			var end = endObj ? endObj.toJSON().substr(0, 7) : null;
+			if (startObj) startObj = that.el.querySelector('[data-date="' + startObj.toJSON() + '"]');
+			if (endObj) endObj = that.el.querySelector('[data-date="' + endObj.toJSON() + '"]');
+			if (startObj) startObj = startObj.parentNode.parentNode.parentNode;
+			if (endObj) endObj = endObj.parentNode.parentNode.parentNode;
+
+			if (start && end) {
+				that.el.tables.classList.add('d-selected');
+			} else {
+				that.el.tables.classList.remove('d-selected');
+			}
+
+			var bContinued = false;
+			[].slice.call(that.el.querySelectorAll('.d-table-head')).forEach(function (tableHead, index) {
+				var year_month = tableHead.getAttribute('data-ym');
+				tableHead.classList.remove('d-start');
+				tableHead.classList.remove('d-cont');
+				tableHead.classList.remove('d-end');
+				if (start) {
+					if (end) {
+						// special case for single date selection
+						if (tableHead === startObj && selectedDates[1].getTime() !== selectedDates[0].getTime()) {
+							tableHead.classList.add('d-start');
+							bContinued = true;
+						}
+						if (tableHead === endObj) {
+							tableHead.classList.add('d-end');
+						}
+					} else {
+						if (tableHead === startObj) {
+							tableHead.classList.add('d-start');
+							bContinued = true;
+						}
+					}
+					if (! bContinued) {
+						bContinued = true;
+						if (start < year_month && (! end || year_month <= end)) tableHead.classList.add('d-cont');
+					}
+				}
+			});
+		}
+
 		function inputChange(e){
+			if (locked) {
+				return;
+			}
 			var input = this;
 			var date = new Date(input.getAttribute('data-date'));
-			input.classList.remove('single');
-			if(locked){return;}
-			if(range){
-				that.el.tables.classList.remove('before');
-			}
-			if(input.checked){
-				if(maxSelections && selectedDates.length > maxSelections-1){
-					var length = selectedDates.length;
-					for(length; length > maxSelections-1; length --){
+
+			if (range) {
+				if (selectedDates.length > 1) {
+					while (selectedDates.length > 0) {
 						unselectDate(selectedDates[0]);
 					}
-
 				}
+				selectDate(date);
 
-				if(range && selectedDates.length){
-					var first = that.el.querySelector('[data-date="'+ selectedDates[0].toJSON() +'"]');
-					if(!first && date > selectedDates[0]){
-						that.el.tables.classList.add('before');
+			} else {
+				if (input.checked) {
+					if (maxSelections && selectedDates.length > maxSelections - 1) {
+						var length = selectedDates.length;
+						for (length; length > maxSelections - 1; length--) {
+							unselectDate(selectedDates[0]);
+						}
 					}
-				}
-
-				selectedDates.push(date);
-
-				if(closeOnSelect){
-					that.hide();
-				}
-			}else{
-				if(range && selectedDates.length == 1 && selectedDates[0].getTime() == date.getTime()){
 					selectDate(date);
-					input.classList.add('single');
-				}else{
-					selectedDates = selectedDates.filter(function(x){return x.getTime() != date.getTime()})
+				} else {
+					unselectDate(date);
 				}
 			}
 
-			if(onSelect){
-				onSelect.call(date,input.checked);
+			updateRange();
+
+			if (closeOnSelect) {
+				that.hide();
 			}
 		};
 
@@ -583,7 +652,7 @@
 					onClose.apply(that);
 				}
 				that.el.removeEventListener(whichAnimationEvent(),handler);
-			}
+			};
 			that.el.addEventListener(whichAnimationEvent(),handler);
 			that.el.classList.add('d-hide');
 		};
@@ -630,7 +699,7 @@
 					setDate();
 					that.el.yearPicker.classList.remove('d-show');
 				});
-			})
+			});
 
 			var startX = 0;
 			var distance = 0;
@@ -664,7 +733,7 @@
 
 		function init(){
 			that.el = document.createElement('div');
-			that.el.id = 'Datepickk';
+			that.el.className = 'Datepickk';
 			that.el.classList.add(getBrowserVersion().type);
 			that.el.innerHTML = template;
 			that.el.calendar = that.el.childNodes[1];
@@ -673,15 +742,13 @@
 			that.el.header = that.el.calendar.childNodes[0];
 			that.el.monthPicker = that.el.calendar.childNodes[1];
 			that.el.yearPicker = that.el.calendar.childNodes[2];
-			that.el.tables = that.el.calendar.childNodes[4];
-			that.el.days = that.el.calendar.childNodes[3];
+			that.el.tables = that.el.calendar.childNodes[3];
 			that.el.overlay = that.el.childNodes[4];
 			that.el.legend = that.el.childNodes[2];
 
 			setArgs(args);
 
 			generateInputs();
-			generateDaynames();
 			bindEvents();
 
 			if(inline){
@@ -785,7 +852,6 @@
 				set: function(x){
 					if(typeof x == 'number' && x > 0){
 						months = x;
-						generateDaynames();
 						generateInputs();
 						setDate();
 
@@ -859,6 +925,13 @@
 					return highlight;
 				},
 				set: function(x){
+					var nextId = 0;
+					var idList = {};
+					highlight.forEach(function(hl) {
+						const key = (hl.legend || '') + '|' + (hl.backgroundColor || '') + '|' + (hl.color || '');
+						idList[key] = hl.id;
+						if (hl.id >= nextId) nextId = hl.id + 1;
+					});
 					if(x instanceof Array){
 						x.forEach(function(hl) {
 							if(hl instanceof Object){
@@ -876,12 +949,15 @@
 											start: new Date(hlDate.start.getFullYear(),hlDate.start.getMonth(),hlDate.start.getDate()),
 											end: ('end' in hlDate)?new Date(hlDate.end.getFullYear(),hlDate.end.getMonth(),hlDate.end.getDate()):new Date(hlDate.start.getFullYear(),hlDate.start.getMonth(),hlDate.start.getDate())
 										});
-									})
+									});
 								}
 
 								highlightObj.color 				= hl.color;
 								highlightObj.backgroundColor 	= hl.backgroundColor;
 								highlightObj.legend				= ('legend' in hl)?hl.legend:null;
+								const key = (highlightObj.legend || '') + '|' + (highlightObj.backgroundColor || '') + '|' + (highlightObj.color || '');
+								highlightObj.id = (key in idList ? idList[key] : nextId++);
+								idList[key] = highlightObj.id;
 
 								highlight.push(highlightObj);
 							}
@@ -907,6 +983,9 @@
 						highlightObj.color 				= x.color;
 						highlightObj.backgroundColor 	= x.backgroundColor;
 						highlightObj.legend				= ('legend' in x)?x.legend:null;
+						const key = (highlightObj.legend || '') + '|' + (highlightObj.backgroundColor || '') + '|' + (highlightObj.color || '');
+						highlightObj.id = (key in idList ? idList[key] : nextId++);
+						idList[key] = highlightObj.id;
 
 						highlight.push(highlightObj);
 					}else if(!x){
@@ -1028,7 +1107,7 @@
 			"tooltips": {
 				get: function(){
 					var ret = [];
-					for(key in tooltips){
+					for(var key in tooltips){
 						ret.push({
 							date: new Date(parseInt(key)),
 							text: tooltips[key]
@@ -1147,21 +1226,21 @@
 	};
 
 	function whichAnimationEvent(){
-	    var t;
-	    var el = document.createElement('fakeelement');
-	    var transitions = {
-	      'animation':'animationend',
-	      'OAnimation':'oanimationend',
-	      'MozAnimation':'animationend',
-	      'WebkitAnimation':'webkitAnimationEnd',
-	      '':'MSAnimationEnd'
-	    };
+			var t;
+			var el = document.createElement('fakeelement');
+			var transitions = {
+				'animation':'animationend',
+				'OAnimation':'oanimationend',
+				'MozAnimation':'animationend',
+				'WebkitAnimation':'webkitAnimationEnd',
+				'':'MSAnimationEnd'
+			};
 
-	    for(t in transitions){
-	        if( el.style[t] !== undefined ){
-	            return transitions[t];
-	        }
-	    }
+			for(t in transitions){
+					if( el.style[t] !== undefined ){
+							return transitions[t];
+					}
+			}
 	}
 
 	var template = 	'<div class="d-title"></div>' +
@@ -1198,7 +1277,6 @@
 							'<div data-year="4"></div>' +
 							'<div data-year="5"></div>' +
 						'</div>' +
-						'<div class="d-weekdays"></div>' +
 						'<div class="d-tables"></div>' +
 					'</div>' +
 					'<div class="d-legend"></div>' +
@@ -1209,34 +1287,34 @@
 		var browser = {
 			type: null,
 			version: null
-		}
+		};
 
 		var ua= navigator.userAgent, tem, ios,
-	    M= ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
-	    ios = ua.match(/(iphone|ipad)\s+OS\s+([\d+_]+\d+)/i) || [];
-	    if(/trident/i.test(M[1])){
-	        tem=  /\brv[ :]+(\d+)/g.exec(ua) || [];
-	        browser.type = 'MSIE';
-	        browser.version = parseInt(tem[1]);
-	        return browser;
-	    }
-	    if(M[1]=== 'Chrome'){
-	        tem= ua.match(/\bOPR\/(\d+)/)
-	        if(tem!= null) return 'Opera '+tem[1];
-	    }
-	    if(ios[1]){
-	    	return browser = {
-	    		type: 'iOS',
-	    		version: ios[2]
-	    	};
-	    }
-	    M= M[2]? [M[1], M[2]]: [navigator.appName, navigator.appVersion, '-?'];
-	    if((tem= ua.match(/version\/(\d+)/i))!= null) M.splice(1, 1, tem[1]);
-	    browser.type = M[0];
-	    browser.version = parseInt(M[1]);
+			M= ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
+			ios = ua.match(/(iphone|ipad)\s+OS\s+([\d+_]+\d+)/i) || [];
+			if(/trident/i.test(M[1])){
+					tem=  /\brv[ :]+(\d+)/g.exec(ua) || [];
+					browser.type = 'MSIE';
+					browser.version = parseInt(tem[1]);
+					return browser;
+			}
+			if(M[1]=== 'Chrome'){
+					tem= ua.match(/\bOPR\/(\d+)/);
+					if(tem!= null) return 'Opera '+tem[1];
+			}
+			if(ios[1]){
+				return browser = {
+					type: 'iOS',
+					version: ios[2]
+				};
+			}
+			M= M[2]? [M[1], M[2]]: [navigator.appName, navigator.appVersion, '-?'];
+			if((tem= ua.match(/version\/(\d+)/i))!= null) M.splice(1, 1, tem[1]);
+			browser.type = M[0];
+			browser.version = parseInt(M[1]);
 
-	    return browser;
-	}
+			return browser;
+	};
 
 	/* Spread it to the world! */
 	if ( typeof define === 'function' && define.amd ) define('Datepickk', Datepickk);
