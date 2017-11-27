@@ -7,7 +7,8 @@ const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 module.exports = {
   entry: {
     'datepickk': './src/js/datepickk.js',
-    'datepickk.min': './src/js/datepickk.js'
+    'datepickk.min': './src/js/datepickk.js',
+    'doc': './docs/doc.less'
   },
   //devtool: 'source-map',
   output: {
