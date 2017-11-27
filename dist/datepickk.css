@@ -7,23 +7,16 @@
   position: fixed;
   top: 0;
   left: 0;
-  display: -ms-flexbox;
   display: flex;
-  -ms-flex-direction: column;
-      flex-direction: column;
-  -ms-flex-align: center;
-      align-items: center;
-  -ms-flex-pack: center;
-      justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   z-index: 999;
   width: 100%;
   height: 100%;
-  font-family: 'Raleway', 'Open Sans', Arial;
+  font-family: inherit;
   color: #333;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  user-select: none;
 }
 #Datepickk.MSIE:not(.wrapped):not(.inline) .d-calendar {
   height: 560px;
@@ -150,10 +143,8 @@
 #Datepickk.fullscreen .d-calendar input + label {
   outline: 1px solid #eaeaea;
   box-sizing: border-box;
-  -ms-flex-align: start !important;
-      align-items: flex-start !important;
-  -ms-flex-pack: end !important;
-      justify-content: flex-end !important;
+  align-items: flex-start !important;
+  justify-content: flex-end !important;
 }
 #Datepickk.fullscreen .d-calendar input + label text {
   padding: 5px 10px 0 0;
@@ -162,12 +153,9 @@
   max-width: none;
 }
 #Datepickk .d-legend {
-  display: -ms-flexbox;
   display: flex;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
-  -ms-flex-pack: center;
-      justify-content: center;
+  flex-wrap: wrap;
+  justify-content: center;
   width: 100%;
   z-index: 2;
   background-color: whitesmoke;
@@ -209,14 +197,10 @@
   position: relative;
   max-width: 500px;
   max-height: 560px;
-  display: -ms-flexbox;
   display: flex;
-  -ms-flex-direction: column;
-      flex-direction: column;
-  -ms-flex-pack: start;
-      justify-content: flex-start;
-  -ms-flex-positive: 1;
-      flex-grow: 1;
+  flex-direction: column;
+  justify-content: flex-start;
+  flex-grow: 1;
   z-index: 2;
 }
 #Datepickk .d-header {
@@ -301,10 +285,8 @@
   content: "";
 }
 #Datepickk .d-month-picker {
-  display: -ms-flexbox;
   display: flex;
-  -ms-flex-pack: justify;
-      justify-content: space-between;
+  justify-content: space-between;
   background-color: rgba(27, 54, 63, 0.9);
   height: 0;
   overflow: hidden;
@@ -332,10 +314,8 @@
   color: white;
 }
 #Datepickk .d-year-picker {
-  display: -ms-flexbox;
   display: flex;
-  -ms-flex-pack: justify;
-      justify-content: space-between;
+  justify-content: space-between;
   background-color: rgba(27, 54, 63, 0.9);
   height: 0;
   overflow: hidden;
@@ -363,13 +343,11 @@
   color: white;
 }
 #Datepickk .d-weekdays {
-  display: -ms-flexbox;
   display: flex;
 }
 #Datepickk .d-week {
   background-color: #E95A5A;
   color: white;
-  display: -ms-flexbox;
   display: flex;
   width: 100%;
 }
@@ -377,8 +355,7 @@
   border-left: 1px solid rgba(255, 255, 255, 0.05);
 }
 #Datepickk .d-week > div {
-  -ms-flex-preferred-size: calc(100% / 7);
-      flex-basis: calc(100% / 7);
+  flex-basis: calc(100% / 7);
   text-align: center;
 }
 #Datepickk .d-week > div p {
@@ -391,19 +368,14 @@
 }
 #Datepickk .d-table {
   width: 100%;
-  display: -ms-flexbox;
   display: flex;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
-  -ms-flex: 1;
-      flex: 1;
+  flex-wrap: wrap;
+  flex: 1;
 }
 #Datepickk .d-table:first-child:nth-last-child(n + 3),
 #Datepickk .d-table:first-child:nth-last-child(n + 3) ~ div {
-  -ms-flex: 0;
-      flex: 0;
-  -ms-flex-preferred-size: calc(100% / 3 - 1px);
-      flex-basis: calc(100% / 3 - 1px);
+  flex: 0;
+  flex-basis: calc(100% / 3 - 1px);
   /*-1px due to browser render*/
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
@@ -420,12 +392,9 @@
   flex-basis: calc(100% / 7);
   -ms-flex-preferred-size: 14.28%;
   /*Keep -> IE render fail*/
-  display: -ms-flexbox;
   display: flex;
-  -ms-flex-align: center;
-      align-items: center;
-  -ms-flex-pack: center;
-      justify-content: center;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
   transition: background-color 0.2s ease, background 0.2s ease, color 0.2s ease;
   position: relative;
@@ -551,12 +520,9 @@
   content: none;
 }
 #Datepickk .d-tables {
-  display: -ms-flexbox;
   display: flex;
-  -ms-flex: 1;
-      flex: 1;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
+  flex: 1;
+  flex-wrap: wrap;
 }
 #Datepickk .d-tables:not(.locked) input:not(:checked) + label:not(.hidden):hover {
   color: #222;
