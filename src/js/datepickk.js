@@ -40,6 +40,11 @@ function Datepickk(args){
 			monthNames:['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'],
 			dayNames:['So','Mo','Di','Mi','Do','Fr','Sa'],
 			weekStart:1
+		},
+		fr: {
+			monthNames:['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'],
+			dayNames:['Lu','Ma','Me','Je','Ve','Sa','Di'],
+			weekStart:1	
 		}
 	};
 
