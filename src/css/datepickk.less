@@ -6,7 +6,7 @@
 
 /*Datepickk*/
 
-.d-noscroll{
+.dp-noscroll{
 	overflow:hidden;
 }
 
@@ -27,12 +27,12 @@
 
     user-select: none;
 
-    &.MSIE:not(.wrapped):not(.inline) .d-calendar{
+    &.MSIE:not(.wrapped):not(.inline) .dp-calendar{
     	height:560px;
     }
 
-    &.d-show{
-		.d-overlay{
+    &.dp-show{
+		.dp-overlay{
 			animation-name: show;
 			animation-duration: .2s;
 			animation-timing-function: ease-out;
@@ -40,7 +40,7 @@
 		}
 	}
 
-	&.d-hide{
+	&.dp-hide{
 
 		& > *{
 			animation-name: DatepickkHide;
@@ -49,7 +49,7 @@
 		    animation-fill-mode: both;
 		}
 
-		.d-overlay{
+		.dp-overlay{
 			animation-name: show;
 	        animation-duration: .15s;
 	        animation-timing-function: ease-out;
@@ -58,7 +58,7 @@
 		}
 	}
 
-	.d-overlay{
+	.dp-overlay{
 		position: absolute;
 		top: 0;
 		left: 0;
@@ -68,7 +68,7 @@
 		z-index:1;
 	}
 
-	.d-title{
+	.dp-title{
 		color:white;
 		text-align: center;
 		position: relative;
@@ -77,7 +77,7 @@
 		z-index: 2;
 	}
 
-	.d-confirm{
+	.dp-confirm{
 		border: none;
 		position: relative;
 		background-color: transparent;
@@ -92,26 +92,26 @@
 		z-index: 2;
 	}
 
-	.d-title:empty,.d-confirm:empty{
+	.dp-title:empty,.dp-confirm:empty{
 		display: none;
 	}
 
 	@media(max-height:528px){
-		.d-title,.d-confirm{
+		.dp-title,.dp-confirm{
 			font-size:20px;
 			margin:15px 0;
 		}
-		.d-calendar{
+		.dp-calendar{
 			font-size: 20px;
 		}
 	}
 
 	&.multi{
-		.d-calendar,.d-legend{
+		.dp-calendar,.dp-legend{
 			max-width: 800px;
 		}
 
-		.d-table{
+		.dp-table{
 			position: relative;
 			padding-top:35px;
 
@@ -131,7 +131,7 @@
 	}
 
 	&.inline{
-		&.d-show .d-calendar{
+		&.dp-show .dp-calendar{
 			animation: none;
 		}
 	}
@@ -140,22 +140,22 @@
 		position: static;
 		z-index: 0;
 
-		.d-calendar{
+		.dp-calendar{
 			box-shadow: none;
 			z-index: 0;
 			max-width: none;
 			max-height: none;
 		}
 
-		.d-confirm,.d-title{
+		.dp-confirm,.dp-title{
 			color:#222;
 		}
 
-		.d-overlay{
+		.dp-overlay{
 			display: none;
 		}
 
-		.d-legend{
+		.dp-legend{
 			color:#222!important;
 			max-width: none;
 			max-height: none;
@@ -163,7 +163,7 @@
 	}
 
 	&.fullscreen{
-		.d-calendar{
+		.dp-calendar{
 				max-width: none;
 				max-height: none;
 
@@ -179,12 +179,12 @@
 				}
 		}
 
-		.d-legend{
+		.dp-legend{
 			max-width: none;
 		}
 	}
 
-	.d-legend{
+	.dp-legend{
 		display: flex;
 		flex-wrap:wrap;
 		justify-content:center;
@@ -200,7 +200,7 @@
 		}
 
 		p{
-			.d-fadeInUp();
+			.dp-fadeInUp();
 			margin:0;
 			padding: 15px;
 			transition: background-color .2s ease;
@@ -222,7 +222,7 @@
 		}
 	}
 
-	.d-calendar{
+	.dp-calendar{
 		margin:0;
 		background-color:white;
 		box-shadow: 0px 2px 10px -2px rgba(0, 0, 0, 0.6);
@@ -238,7 +238,7 @@
 		z-index: 2;
 	}
 
-	.d-header{
+	.dp-header{
 		position: relative;
 		background-color: #1B363F;
 		color: white;
@@ -278,7 +278,7 @@
 				transition: border-color .2s ease;
 			}
 
-			&#d-previous{
+			&#dp-previous{
 				left:20px;
 				&:before{
 					border-right: 10px solid #FFF;
@@ -293,7 +293,7 @@
 				}
 			}
 
-			&#d-next{
+			&#dp-next{
 				right:20px;
 				&:before{
 					border-left: 10px solid #FFF;
@@ -318,12 +318,12 @@
   		}
 	}
 
-	.d-month{
+	.dp-month{
 		cursor: pointer;
 		white-space: nowrap;
 	}
 
-	.d-year{
+	.dp-year{
 		margin-left:10px;
 		cursor: pointer;
 
@@ -332,7 +332,7 @@
 		}
 	}
 
-	.d-month-picker{
+	.dp-month-picker{
 		display: flex;
 		justify-content:space-between;
 		background-color: fade(#1B363F,90%);
@@ -341,7 +341,7 @@
 		pointer-events: none;
 		transition: height .2s ease;
 
-		&.d-show{
+		&.dp-show{
 			height: 44px;
 			pointer-events: auto;
 		}
@@ -365,7 +365,7 @@
 		}
 	}
 
-	.d-year-picker{
+	.dp-year-picker{
 		display: flex;
 		justify-content:space-between;
 		background-color: fade(#1B363F,90%);
@@ -374,7 +374,7 @@
 		pointer-events: none;
 		transition: height .2s ease;
 
-		&.d-show{
+		&.dp-show{
 			height: 44px;
 			pointer-events: auto;
 		}
@@ -398,16 +398,16 @@
 		}
 	}
 
-	.d-weekdays{
+	.dp-weekdays{
 		display: flex;
 	}
-	.d-week{
+	.dp-week{
 		background-color:@color;
 		color:contrast(@color,black,white);
   		display: flex;
   		width: 100%;
 
-  		& + .d-week{
+  		& + .dp-week{
   			border-left:1px solid rgba(255,255,255,0.05);
   		}
 
@@ -425,7 +425,7 @@
   		}
 	}
 
-	.d-table{
+	.dp-table{
 		width: 100%;
 	    display: flex;
 	    flex-wrap: wrap;
@@ -438,11 +438,11 @@
 			border-bottom:1px solid rgba(0,0,0,0.05);
 	    }
 
-	    label:nth-of-type(7n) .d-date-legends{
+	    label:nth-of-type(7n) .dp-date-legends{
 			padding-right:0;
 	    }
 
-	    label:nth-last-of-type(-n + 7) .d-date-legends{
+	    label:nth-last-of-type(-n + 7) .dp-date-legends{
 	    	padding-bottom:0;
 	    }
 
@@ -531,7 +531,7 @@
   				}
 
 
-  				.d-tooltip{
+  				.dp-tooltip{
 					position: absolute;
 					background-color: #1B363F;
 					color: #FFF;
@@ -561,7 +561,7 @@
   				}
 
   				&:hover {
-  					.d-tooltip{
+  					.dp-tooltip{
   						display: block;
   					}
   				}
@@ -595,7 +595,7 @@
 
 			}
 
-			& + label.d-hidden{
+			& + label.dp-hidden{
 				cursor:default;
 				color: #ccc!important;
 				background: #f0f0f0!important;
@@ -608,7 +608,7 @@
 		}
 	}
 
-	.d-tables{
+	.dp-tables{
 		display: flex;
 		flex:1;
 		flex-wrap:wrap;
@@ -701,7 +701,7 @@
 		}
 	}
 
-	.d-fadeInUp {
+	.dp-fadeInUp {
 	  backface-visibility: visible !important;
 	  animation-name: DatepickfadeInUp;
 	  animation-duration: .5s;
@@ -727,11 +727,11 @@
   }
 }
 
-.d-fadeInUp {
+.dp-fadeInUp {
   animation-name: DatepickfadeInUp;
 }
 
-#Datepickk.d-show > *{
+#Datepickk.dp-show > *{
 	animation-name: DatepickkShow;
 	animation-duration: .2s;
 	animation-timing-function: ease-out;
