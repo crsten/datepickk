@@ -120,6 +120,11 @@ function Datepickk(args) {
 			monthNames: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
 			dayNames: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'],
 			weekStart: 1
+		},
+		uk: {
+			monthNames: ['Січень', 'Лютий', 'Березень', 'Квітень', 'Травень', 'Червень', 'Липень', 'Серпень', 'Вересень', 'Жовтень', 'Листопад', 'Грудень'],
+			dayNames: ['нд', 'пн', 'вт', 'ср', 'чт', 'пт', 'сб'],
+			weekStart: 1
 		}
 	};
 
@@ -160,7 +165,7 @@ function Datepickk(args) {
 		if (daynames) {
 			for (var x = 0; x < months && x < 3; x++) {
 				var weekEl = document.createElement('div');
-				weekEl.setAttribute('class', 'd-week');
+				weekEl.setAttribute('class', 'dp-week');
 				for (var i = 0; i < 7; i++) {
 					var dayNameIndex = i + ws > languages[lang].dayNames.length - 1 ? i + ws - languages[lang].dayNames.length : i + ws;
 
@@ -187,7 +192,7 @@ function Datepickk(args) {
 		that.el.tables.innerHTML = '';
 		for (var x = 0; x < months; x++) {
 			var container = document.createElement('div');
-			container.setAttribute('class', 'd-table');
+			container.setAttribute('class', 'dp-table');
 			for (var i = 0; i < 42; i++) {
 				var input = document.createElement('input');
 				input.type = 'checkbox';
@@ -198,7 +203,7 @@ function Datepickk(args) {
 				var text = document.createElement('text');
 
 				var tooltip = document.createElement('span');
-				tooltip.setAttribute('class', 'd-tooltip');
+				tooltip.setAttribute('class', 'dp-tooltip');
 
 				container.appendChild(input);
 				container.appendChild(label);
@@ -261,10 +266,10 @@ function Datepickk(args) {
 		var legends = [];
 		for (var l = 0; l < _highlights.length; l++) {
 			if ('legend' in _highlights[l] && _highlights[l].legend) {
-				var oldLegend = container.querySelector('.d-legend-item[data-legend="' + _highlights[l].legend + '"][data-color="' + _highlights[l].backgroundColor + '"]');
+				var oldLegend = container.querySelector('.dp-legend-item[data-legend="' + _highlights[l].legend + '"][data-color="' + _highlights[l].backgroundColor + '"]');
 				if (oldLegend == null) {
 					var legendItem = document.createElement('p');
-					legendItem.setAttribute('class', 'd-legend-item');
+					legendItem.setAttribute('class', 'dp-legend-item');
 					legendItem.setAttribute('data-legend', _highlights[l].legend);
 					legendItem.setAttribute('data-legend-id', highlight.indexOf(_highlights[l]));
 					legendItem.setAttribute('data-color', _highlights[l].backgroundColor);
@@ -283,7 +288,7 @@ function Datepickk(args) {
 			}
 		}
 
-		[].slice.call(that.el.legend.querySelectorAll('.d-legend-item')).forEach(function (item) {
+		[].slice.call(that.el.legend.querySelectorAll('.dp-legend-item')).forEach(function (item) {
 			if (legends.indexOf(item) < 0) {
 				item.removeEventListener('mouseover', hoverLegend);
 				item.removeEventListener('mouseout', hoverLegend);
@@ -304,10 +309,10 @@ function Datepickk(args) {
 	}
 
 	function generateDates(year, month) {
-		var monthElements = that.el.querySelectorAll('.d-table');
+		var monthElements = that.el.querySelectorAll('.dp-table');
 		var ws = weekStart !== null ? weekStart : languages[lang].weekStart;
 
-		[].slice.call(that.el.querySelectorAll('.d-table')).forEach(function (element, index) {
+		[].slice.call(that.el.querySelectorAll('.dp-table')).forEach(function (element, index) {
 			var days = new Date(year, month + index, 0).getDate();
 			var daysLast = new Date(year, month + index - 1, 0).getDate();
 			var startDay = new Date(year, month + index - 1, 1).getDay();
@@ -321,7 +326,7 @@ function Datepickk(args) {
 			var monthText = languages[lang].monthNames[parseMonth(month - 1 + index)];
 			element.setAttribute('data-month', monthText);
 
-			[].slice.call(element.querySelectorAll('.d-table input')).forEach(function (inputEl, i) {
+			[].slice.call(element.querySelectorAll('.dp-table input')).forEach(function (inputEl, i) {
 				var labelEl = inputEl.nextSibling;
 
 				inputEl.checked = false;
@@ -338,7 +343,7 @@ function Datepickk(args) {
 						labelEl.className = 'prev';
 					} else {
 						date = '';
-						labelEl.className = 'd-hidden';
+						labelEl.className = 'dp-hidden';
 						inputEl.setAttribute('disabled', true);
 					}
 				} else if (i < days + startDay) {
@@ -352,7 +357,7 @@ function Datepickk(args) {
 						labelEl.className = 'next';
 					} else {
 						date = '';
-						labelEl.className = 'd-hidden';
+						labelEl.className = 'dp-hidden';
 						inputEl.setAttribute('disabled', true);
 					}
 				}
@@ -366,7 +371,7 @@ function Datepickk(args) {
 
 					if (minDate && date < minDate || maxDate && date > maxDate) {
 						inputEl.setAttribute('disabled', true);
-						labelEl.className = 'd-hidden';
+						labelEl.className = 'dp-hidden';
 					}
 
 					if (today && date.getTime() == new Date().setHours(0, 0, 0, 0)) {
@@ -516,7 +521,7 @@ function Datepickk(args) {
 	};
 
 	function resetCalendar() {
-		[].slice.call(that.el.querySelectorAll('.d-table input')).forEach(function (inputEl) {
+		[].slice.call(that.el.querySelectorAll('.dp-table input')).forEach(function (inputEl) {
 			inputEl.checked = false;
 		});
 
@@ -643,15 +648,15 @@ function Datepickk(args) {
 
 	function show(properties) {
 		if (!that.inline && that.container === document.body) {
-			document.body.classList.add('d-noscroll');
+			document.body.classList.add('dp-noscroll');
 		}
 		setArgs(properties);
 		var handler = function handler() {
-			that.el.classList.remove('d-show');
+			that.el.classList.remove('dp-show');
 			that.el.calendar.removeEventListener(whichAnimationEvent(), handler);
 		};
 		that.el.calendar.addEventListener(whichAnimationEvent(), handler);
-		that.el.classList.add('d-show');
+		that.el.classList.add('dp-show');
 		container.appendChild(that.el);
 		opened = true;
 		if (startDate) {
@@ -662,39 +667,39 @@ function Datepickk(args) {
 	};
 
 	function hide() {
-		document.body.classList.remove('d-noscroll');
+		document.body.classList.remove('dp-noscroll');
 		var handler = function handler() {
 			that.el.parentNode.removeChild(that.el);
 			opened = false;
-			that.el.classList.remove('d-hide');
+			that.el.classList.remove('dp-hide');
 			if (typeof onClose == 'function') {
 				onClose.apply(that);
 			}
 			that.el.removeEventListener(whichAnimationEvent(), handler);
 		};
 		that.el.addEventListener(whichAnimationEvent(), handler);
-		that.el.classList.add('d-hide');
+		that.el.classList.add('dp-hide');
 	};
 
 	function bindEvents() {
 		that.el.header.childNodes[0].addEventListener(eventName, prevMonth);
 		that.el.header.childNodes[2].addEventListener(eventName, nextMonth);
 		that.el.header.childNodes[1].childNodes[0].addEventListener(eventName, function () {
-			if (that.el.monthPicker.classList.contains('d-show')) {
-				that.el.monthPicker.classList.remove('d-show');
+			if (that.el.monthPicker.classList.contains('dp-show')) {
+				that.el.monthPicker.classList.remove('dp-show');
 			} else {
-				that.el.monthPicker.classList.add('d-show');
+				that.el.monthPicker.classList.add('dp-show');
 			}
-			that.el.yearPicker.classList.remove('d-show');
+			that.el.yearPicker.classList.remove('dp-show');
 		});
 		that.el.header.childNodes[1].childNodes[1].addEventListener(eventName, function () {
 			generateYears();
-			if (that.el.yearPicker.classList.contains('d-show')) {
-				that.el.yearPicker.classList.remove('d-show');
+			if (that.el.yearPicker.classList.contains('dp-show')) {
+				that.el.yearPicker.classList.remove('dp-show');
 			} else {
-				that.el.yearPicker.classList.add('d-show');
+				that.el.yearPicker.classList.add('dp-show');
 			}
-			that.el.monthPicker.classList.remove('d-show');
+			that.el.monthPicker.classList.remove('dp-show');
 		});
 		that.el.button.addEventListener(eventName, hide);
 
@@ -708,7 +713,7 @@ function Datepickk(args) {
 			monthPicker.addEventListener(eventName, function () {
 				currentMonth = parseInt(this.getAttribute('data-month'));
 				setDate();
-				that.el.monthPicker.classList.remove('d-show');
+				that.el.monthPicker.classList.remove('dp-show');
 			});
 		});
 
@@ -716,7 +721,7 @@ function Datepickk(args) {
 			yearPicker.addEventListener(eventName, function () {
 				currentYear += parseInt(this.getAttribute('data-year'));
 				setDate();
-				that.el.yearPicker.classList.remove('d-show');
+				that.el.yearPicker.classList.remove('dp-show');
 			});
 		});
 
@@ -1259,7 +1264,7 @@ function whichAnimationEvent() {
 	}
 }
 
-var template = '<div class="d-title"></div>' + '<div class="d-calendar">' + '<div class="d-header">' + '<i id="d-previous"></i>' + '<p><span class="d-month"></span><span class="d-year"></span></p>' + '<i id="d-next"></i>' + '</div>' + '<div class="d-month-picker">' + '<div data-month="1">1</div>' + '<div data-month="2">2</div>' + '<div data-month="3">3</div>' + '<div data-month="4">4</div>' + '<div data-month="5">5</div>' + '<div data-month="6">6</div>' + '<div data-month="7">7</div>' + '<div data-month="8">8</div>' + '<div data-month="9">9</div>' + '<div data-month="10">10</div>' + '<div data-month="11">11</div>' + '<div data-month="12">12</div>' + '</div>' + '<div class="d-year-picker">' + '<div data-year="-5"></div>' + '<div data-year="-4"></div>' + '<div data-year="-3"></div>' + '<div data-year="-2"></div>' + '<div data-year="-1"></div>' + '<div data-year="0"></div>' + '<div data-year="1"></div>' + '<div data-year="2"></div>' + '<div data-year="3"></div>' + '<div data-year="4"></div>' + '<div data-year="5"></div>' + '</div>' + '<div class="d-weekdays"></div>' + '<div class="d-tables"></div>' + '</div>' + '<div class="d-legend"></div>' + '<button class="d-confirm"></button>' + '<div class="d-overlay"></div>';
+var template = '<div class="dp-title"></div>' + '<div class="dp-calendar">' + '<div class="dp-header">' + '<i id="dp-previous"></i>' + '<p><span class="dp-month"></span><span class="dp-year"></span></p>' + '<i id="dp-next"></i>' + '</div>' + '<div class="dp-month-picker">' + '<div data-month="1">1</div>' + '<div data-month="2">2</div>' + '<div data-month="3">3</div>' + '<div data-month="4">4</div>' + '<div data-month="5">5</div>' + '<div data-month="6">6</div>' + '<div data-month="7">7</div>' + '<div data-month="8">8</div>' + '<div data-month="9">9</div>' + '<div data-month="10">10</div>' + '<div data-month="11">11</div>' + '<div data-month="12">12</div>' + '</div>' + '<div class="dp-year-picker">' + '<div data-year="-5"></div>' + '<div data-year="-4"></div>' + '<div data-year="-3"></div>' + '<div data-year="-2"></div>' + '<div data-year="-1"></div>' + '<div data-year="0"></div>' + '<div data-year="1"></div>' + '<div data-year="2"></div>' + '<div data-year="3"></div>' + '<div data-year="4"></div>' + '<div data-year="5"></div>' + '</div>' + '<div class="dp-weekdays"></div>' + '<div class="dp-tables"></div>' + '</div>' + '<div class="dp-legend"></div>' + '<button class="dp-confirm"></button>' + '<div class="dp-overlay"></div>';
 
 var getBrowserVersion = function getBrowserVersion() {
 	var browser = {
