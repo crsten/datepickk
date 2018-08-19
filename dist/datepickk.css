@@ -1,6 +1,6 @@
 /*Main color*/
 /*Datepickk*/
-.d-noscroll {
+.dp-noscroll {
   overflow: hidden;
 }
 #Datepickk {
@@ -18,29 +18,29 @@
   color: #333;
   user-select: none;
 }
-#Datepickk.MSIE:not(.wrapped):not(.inline) .d-calendar {
+#Datepickk.MSIE:not(.wrapped):not(.inline) .dp-calendar {
   height: 560px;
 }
-#Datepickk.d-show .d-overlay {
+#Datepickk.dp-show .dp-overlay {
   animation-name: show;
   animation-duration: .2s;
   animation-timing-function: ease-out;
   animation-fill-mode: both;
 }
-#Datepickk.d-hide > * {
+#Datepickk.dp-hide > * {
   animation-name: DatepickkHide;
   animation-duration: .2s;
   animation-timing-function: linear;
   animation-fill-mode: both;
 }
-#Datepickk.d-hide .d-overlay {
+#Datepickk.dp-hide .dp-overlay {
   animation-name: show;
   animation-duration: .15s;
   animation-timing-function: ease-out;
   animation-fill-mode: both;
   animation-direction: reverse;
 }
-#Datepickk .d-overlay {
+#Datepickk .dp-overlay {
   position: absolute;
   top: 0;
   left: 0;
@@ -49,7 +49,7 @@
   background-color: rgba(55, 58, 71, 0.95);
   z-index: 1;
 }
-#Datepickk .d-title {
+#Datepickk .dp-title {
   color: white;
   text-align: center;
   position: relative;
@@ -57,7 +57,7 @@
   margin: 25px 0;
   z-index: 2;
 }
-#Datepickk .d-confirm {
+#Datepickk .dp-confirm {
   border: none;
   position: relative;
   background-color: transparent;
@@ -71,29 +71,29 @@
   padding: 0;
   z-index: 2;
 }
-#Datepickk .d-title:empty,
-#Datepickk .d-confirm:empty {
+#Datepickk .dp-title:empty,
+#Datepickk .dp-confirm:empty {
   display: none;
 }
 @media (max-height: 528px) {
-  #Datepickk .d-title,
-  #Datepickk .d-confirm {
+  #Datepickk .dp-title,
+  #Datepickk .dp-confirm {
     font-size: 20px;
     margin: 15px 0;
   }
-  #Datepickk .d-calendar {
+  #Datepickk .dp-calendar {
     font-size: 20px;
   }
 }
-#Datepickk.multi .d-calendar,
-#Datepickk.multi .d-legend {
+#Datepickk.multi .dp-calendar,
+#Datepickk.multi .dp-legend {
   max-width: 800px;
 }
-#Datepickk.multi .d-table {
+#Datepickk.multi .dp-table {
   position: relative;
   padding-top: 35px;
 }
-#Datepickk.multi .d-table:before {
+#Datepickk.multi .dp-table:before {
   content: attr(data-month);
   text-align: right;
   width: 100%;
@@ -105,7 +105,7 @@
   left: 0;
   top: 0;
 }
-#Datepickk.inline.d-show .d-calendar {
+#Datepickk.inline.dp-show .dp-calendar {
   animation: none;
 }
 #Datepickk.inline,
@@ -113,46 +113,46 @@
   position: static;
   z-index: 0;
 }
-#Datepickk.inline .d-calendar,
-#Datepickk.wrapped .d-calendar {
+#Datepickk.inline .dp-calendar,
+#Datepickk.wrapped .dp-calendar {
   box-shadow: none;
   z-index: 0;
   max-width: none;
   max-height: none;
 }
-#Datepickk.inline .d-confirm,
-#Datepickk.wrapped .d-confirm,
-#Datepickk.inline .d-title,
-#Datepickk.wrapped .d-title {
+#Datepickk.inline .dp-confirm,
+#Datepickk.wrapped .dp-confirm,
+#Datepickk.inline .dp-title,
+#Datepickk.wrapped .dp-title {
   color: #222;
 }
-#Datepickk.inline .d-overlay,
-#Datepickk.wrapped .d-overlay {
+#Datepickk.inline .dp-overlay,
+#Datepickk.wrapped .dp-overlay {
   display: none;
 }
-#Datepickk.inline .d-legend,
-#Datepickk.wrapped .d-legend {
+#Datepickk.inline .dp-legend,
+#Datepickk.wrapped .dp-legend {
   color: #222!important;
   max-width: none;
   max-height: none;
 }
-#Datepickk.fullscreen .d-calendar {
+#Datepickk.fullscreen .dp-calendar {
   max-width: none;
   max-height: none;
 }
-#Datepickk.fullscreen .d-calendar input + label {
+#Datepickk.fullscreen .dp-calendar input + label {
   outline: 1px solid #eaeaea;
   box-sizing: border-box;
   align-items: flex-start !important;
   justify-content: flex-end !important;
 }
-#Datepickk.fullscreen .d-calendar input + label text {
+#Datepickk.fullscreen .dp-calendar input + label text {
   padding: 5px 10px 0 0;
 }
-#Datepickk.fullscreen .d-legend {
+#Datepickk.fullscreen .dp-legend {
   max-width: none;
 }
-#Datepickk .d-legend {
+#Datepickk .dp-legend {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -163,10 +163,10 @@
   position: relative;
   color: white;
 }
-#Datepickk .d-legend:empty {
+#Datepickk .dp-legend:empty {
   height: 0;
 }
-#Datepickk .d-legend p {
+#Datepickk .dp-legend p {
   backface-visibility: visible !important;
   animation-name: DatepickfadeInUp;
   animation-duration: .5s;
@@ -177,10 +177,10 @@
   cursor: pointer;
   color: #1B353F;
 }
-#Datepickk .d-legend p:after {
+#Datepickk .dp-legend p:after {
   content: attr(data-legend);
 }
-#Datepickk .d-legend p span {
+#Datepickk .dp-legend p span {
   width: 20px;
   height: 20px;
   border-radius: 100%;
@@ -188,7 +188,7 @@
   display: inline-block;
   margin-right: 10px;
 }
-#Datepickk .d-calendar {
+#Datepickk .dp-calendar {
   margin: 0;
   background-color: white;
   box-shadow: 0px 2px 10px -2px rgba(0, 0, 0, 0.6);
@@ -203,17 +203,17 @@
   flex-grow: 1;
   z-index: 2;
 }
-#Datepickk .d-header {
+#Datepickk .dp-header {
   position: relative;
   background-color: #1B363F;
   color: white;
   font-size: 1.5em;
 }
-#Datepickk .d-header p {
+#Datepickk .dp-header p {
   margin: .5em 0;
   text-align: center;
 }
-#Datepickk .d-header i {
+#Datepickk .dp-header i {
   position: absolute;
   top: 50%;
   width: 30px;
@@ -224,67 +224,67 @@
   transition: background-color 0.2s ease;
   transform: translateY(-50%);
 }
-#Datepickk .d-header i:before,
-#Datepickk .d-header i:after {
+#Datepickk .dp-header i:before,
+#Datepickk .dp-header i:after {
   content: '';
   width: 0;
   height: 0;
   position: absolute;
 }
-#Datepickk .d-header i:before {
+#Datepickk .dp-header i:before {
   border-top: 10px solid rgba(0, 0, 0, 0);
   border-bottom: 10px solid rgba(0, 0, 0, 0);
 }
-#Datepickk .d-header i:after {
+#Datepickk .dp-header i:after {
   border-top: 7px solid rgba(0, 0, 0, 0);
   border-bottom: 7px solid rgba(0, 0, 0, 0);
   transition: border-color 0.2s ease;
 }
-#Datepickk .d-header i#d-previous {
+#Datepickk .dp-header i#dp-previous {
   left: 20px;
 }
-#Datepickk .d-header i#d-previous:before {
+#Datepickk .dp-header i#dp-previous:before {
   border-right: 10px solid #FFF;
   top: 5px;
   left: 7px;
 }
-#Datepickk .d-header i#d-previous:after {
+#Datepickk .dp-header i#dp-previous:after {
   border-right: 7px solid #1B363F;
   top: 8px;
   left: 10px;
 }
-#Datepickk .d-header i#d-next {
+#Datepickk .dp-header i#dp-next {
   right: 20px;
 }
-#Datepickk .d-header i#d-next:before {
+#Datepickk .dp-header i#dp-next:before {
   border-left: 10px solid #FFF;
   top: 5px;
   left: 12px;
 }
-#Datepickk .d-header i#d-next:after {
+#Datepickk .dp-header i#dp-next:after {
   border-left: 7px solid #1B363F;
   top: 8px;
   left: 12px;
 }
-#Datepickk .d-header i:hover {
+#Datepickk .dp-header i:hover {
   background-color: #5E7178;
 }
-#Datepickk .d-header i:hover:after {
+#Datepickk .dp-header i:hover:after {
   border-left-color: #5E7178!important;
   border-right-color: #5E7178!important;
 }
-#Datepickk .d-month {
+#Datepickk .dp-month {
   cursor: pointer;
   white-space: nowrap;
 }
-#Datepickk .d-year {
+#Datepickk .dp-year {
   margin-left: 10px;
   cursor: pointer;
 }
-#Datepickk .d-year:before {
+#Datepickk .dp-year:before {
   content: "";
 }
-#Datepickk .d-month-picker {
+#Datepickk .dp-month-picker {
   display: flex;
   justify-content: space-between;
   background-color: rgba(27, 54, 63, 0.9);
@@ -293,27 +293,27 @@
   pointer-events: none;
   transition: height .2s ease;
 }
-#Datepickk .d-month-picker.d-show {
+#Datepickk .dp-month-picker.dp-show {
   height: 44px;
   pointer-events: auto;
 }
-#Datepickk .d-month-picker > div {
+#Datepickk .dp-month-picker > div {
   width: calc(100% / 12);
   text-align: center;
   line-height: 44px;
   color: white;
   cursor: pointer;
 }
-#Datepickk .d-month-picker > div:hover,
-#Datepickk .d-month-picker > div:focus {
+#Datepickk .dp-month-picker > div:hover,
+#Datepickk .dp-month-picker > div:focus {
   background-color: #e32d2d;
   color: white;
 }
-#Datepickk .d-month-picker > div.current {
+#Datepickk .dp-month-picker > div.current {
   background-color: #e9965a;
   color: white;
 }
-#Datepickk .d-year-picker {
+#Datepickk .dp-year-picker {
   display: flex;
   justify-content: space-between;
   background-color: rgba(27, 54, 63, 0.9);
@@ -322,73 +322,73 @@
   pointer-events: none;
   transition: height .2s ease;
 }
-#Datepickk .d-year-picker.d-show {
+#Datepickk .dp-year-picker.dp-show {
   height: 44px;
   pointer-events: auto;
 }
-#Datepickk .d-year-picker > div {
+#Datepickk .dp-year-picker > div {
   width: calc(100% / 11);
   text-align: center;
   line-height: 44px;
   color: white;
   cursor: pointer;
 }
-#Datepickk .d-year-picker > div:hover,
-#Datepickk .d-year-picker > div:focus {
+#Datepickk .dp-year-picker > div:hover,
+#Datepickk .dp-year-picker > div:focus {
   background-color: #e32d2d;
   color: white;
 }
-#Datepickk .d-year-picker > div.current {
+#Datepickk .dp-year-picker > div.current {
   background-color: #e9965a;
   color: white;
 }
-#Datepickk .d-weekdays {
+#Datepickk .dp-weekdays {
   display: flex;
 }
-#Datepickk .d-week {
+#Datepickk .dp-week {
   background-color: #E95A5A;
   color: white;
   display: flex;
   width: 100%;
 }
-#Datepickk .d-week + .d-week {
+#Datepickk .dp-week + .dp-week {
   border-left: 1px solid rgba(255, 255, 255, 0.05);
 }
-#Datepickk .d-week > div {
+#Datepickk .dp-week > div {
   flex-basis: calc(100% / 7);
   text-align: center;
 }
-#Datepickk .d-week > div p {
+#Datepickk .dp-week > div p {
   margin: .8em 0;
 }
 @media (max-height: 540px) {
-  #Datepickk .d-week {
+  #Datepickk .dp-week {
     display: none;
   }
 }
-#Datepickk .d-table {
+#Datepickk .dp-table {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
   flex: 1;
 }
-#Datepickk .d-table:first-child:nth-last-child(n + 3),
-#Datepickk .d-table:first-child:nth-last-child(n + 3) ~ div {
+#Datepickk .dp-table:first-child:nth-last-child(n + 3),
+#Datepickk .dp-table:first-child:nth-last-child(n + 3) ~ div {
   flex: 0;
   flex-basis: calc(100% / 3 - 1px);
   /*-1px due to browser render*/
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
-#Datepickk .d-table label:nth-of-type(7n) .d-date-legends {
+#Datepickk .dp-table label:nth-of-type(7n) .dp-date-legends {
   padding-right: 0;
 }
-#Datepickk .d-table label:nth-last-of-type(-n + 7) .d-date-legends {
+#Datepickk .dp-table label:nth-last-of-type(-n + 7) .dp-date-legends {
   padding-bottom: 0;
 }
-#Datepickk .d-table input {
+#Datepickk .dp-table input {
   display: none;
 }
-#Datepickk .d-table input + label {
+#Datepickk .dp-table input + label {
   flex-basis: calc(100% / 7);
   -ms-flex-preferred-size: 14.28%;
   /*Keep -> IE render fail*/
@@ -401,15 +401,15 @@
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   box-sizing: border-box;
 }
-#Datepickk .d-table input + label text {
+#Datepickk .dp-table input + label text {
   z-index: 9;
   pointer-events: none;
   position: relative;
 }
-#Datepickk .d-table input + label[style*="linear-gradient"] text {
+#Datepickk .dp-table input + label[style*="linear-gradient"] text {
   text-shadow: 0 0 20px black;
 }
-#Datepickk .d-table input + label.today text:before {
+#Datepickk .dp-table input + label.today text:before {
   content: '';
   width: 100%;
   height: 2px;
@@ -418,7 +418,7 @@
   bottom: -5px;
   left: 0;
 }
-#Datepickk .d-table input + label:before {
+#Datepickk .dp-table input + label:before {
   content: '';
   position: absolute;
   top: 12.5%;
@@ -431,7 +431,7 @@
   transform: scaleX(0);
   transform-origin: left;
 }
-#Datepickk .d-table input + label.legend-hover {
+#Datepickk .dp-table input + label.legend-hover {
   animation: legendhover 1s infinite;
   z-index: 10;
 }
@@ -446,11 +446,11 @@
     transform: translate(0, 0px);
   }
 }
-#Datepickk .d-table input + label.next,
-#Datepickk .d-table input + label.prev {
+#Datepickk .dp-table input + label.next,
+#Datepickk .dp-table input + label.prev {
   color: #ccc;
 }
-#Datepickk .d-table input + label [data-tooltip]:after {
+#Datepickk .dp-table input + label [data-tooltip]:after {
   content: '';
   border-radius: 100%;
   background-color: #1B363F;
@@ -460,7 +460,7 @@
   top: 0;
   right: -10px;
 }
-#Datepickk .d-table input + label .d-tooltip {
+#Datepickk .dp-table input + label .dp-tooltip {
   position: absolute;
   background-color: #1B363F;
   color: #FFF;
@@ -473,7 +473,7 @@
   transform: translate(-50%, -5px);
   display: none;
 }
-#Datepickk .d-table input + label .d-tooltip:before {
+#Datepickk .dp-table input + label .dp-tooltip:before {
   content: '';
   border-bottom: 7px solid #1B363F;
   border-left: 5px solid rgba(0, 0, 0, 0);
@@ -483,22 +483,22 @@
   position: absolute;
   margin-left: -5px;
 }
-#Datepickk .d-table input + label .d-tooltip:empty {
+#Datepickk .dp-table input + label .dp-tooltip:empty {
   display: none!important;
 }
-#Datepickk .d-table input + label:hover .d-tooltip {
+#Datepickk .dp-table input + label:hover .dp-tooltip {
   display: block;
 }
-#Datepickk .d-table input:checked + label {
+#Datepickk .dp-table input:checked + label {
   color: white;
 }
-#Datepickk .d-table input:checked + label:before {
+#Datepickk .dp-table input:checked + label:before {
   transform: scaleX(1);
 }
-#Datepickk .d-table input:disabled + label {
+#Datepickk .dp-table input:disabled + label {
   cursor: not-allowed;
 }
-#Datepickk .d-table input:disabled + label:after {
+#Datepickk .dp-table input:disabled + label:after {
   content: '';
   position: absolute;
   top: 50%;
@@ -510,86 +510,86 @@
   transform-origin: center;
   transform: rotate(-25deg);
 }
-#Datepickk .d-table input + label.d-hidden {
+#Datepickk .dp-table input + label.dp-hidden {
   cursor: default;
   color: #ccc!important;
   background: #f0f0f0!important;
   text-decoration: line-through;
 }
-#Datepickk .d-table input + label.d-hidden:after {
+#Datepickk .dp-table input + label.dp-hidden:after {
   content: none;
 }
-#Datepickk .d-tables {
+#Datepickk .dp-tables {
   display: flex;
   flex: 1;
   flex-wrap: wrap;
 }
-#Datepickk .d-tables:not(.locked) input:not(:checked) + label:not(.hidden):hover {
+#Datepickk .dp-tables:not(.locked) input:not(:checked) + label:not(.hidden):hover {
   color: #222;
   background-color: #eaeaea;
 }
-#Datepickk .d-tables.locked label {
+#Datepickk .dp-tables.locked label {
   cursor: default;
 }
-#Datepickk .d-tables.range:not(.before) input:not(.single):checked + label {
+#Datepickk .dp-tables.range:not(.before) input:not(.single):checked + label {
   color: white;
 }
-#Datepickk .d-tables.range:not(.before) input:not(.single):checked + label ~ label:not(.hidden) {
+#Datepickk .dp-tables.range:not(.before) input:not(.single):checked + label ~ label:not(.hidden) {
   color: white;
 }
-#Datepickk .d-tables.range:not(.before) input:not(.single):checked + label ~ label:not(.hidden):before {
+#Datepickk .dp-tables.range:not(.before) input:not(.single):checked + label ~ label:not(.hidden):before {
   transform: scaleX(1);
   background-color: rgba(125, 208, 118, 0.5);
 }
-#Datepickk .d-tables.range:not(.before) input:not(.single):checked ~ label:hover ~ label,
-#Datepickk .d-tables.range:not(.before) input:not(.single):checked ~ label:focus ~ label {
+#Datepickk .dp-tables.range:not(.before) input:not(.single):checked ~ label:hover ~ label,
+#Datepickk .dp-tables.range:not(.before) input:not(.single):checked ~ label:focus ~ label {
   color: #666;
 }
-#Datepickk .d-tables.range:not(.before) input:not(.single):checked ~ label:hover ~ label:before,
-#Datepickk .d-tables.range:not(.before) input:not(.single):checked ~ label:focus ~ label:before {
+#Datepickk .dp-tables.range:not(.before) input:not(.single):checked ~ label:hover ~ label:before,
+#Datepickk .dp-tables.range:not(.before) input:not(.single):checked ~ label:focus ~ label:before {
   transform: scaleX(0);
 }
-#Datepickk .d-tables.range:not(.before) input:not(.single):checked ~ label:hover ~ label.next,
-#Datepickk .d-tables.range:not(.before) input:not(.single):checked ~ label:focus ~ label.next,
-#Datepickk .d-tables.range:not(.before) input:not(.single):checked ~ label:hover ~ label.prev,
-#Datepickk .d-tables.range:not(.before) input:not(.single):checked ~ label:focus ~ label.prev {
+#Datepickk .dp-tables.range:not(.before) input:not(.single):checked ~ label:hover ~ label.next,
+#Datepickk .dp-tables.range:not(.before) input:not(.single):checked ~ label:focus ~ label.next,
+#Datepickk .dp-tables.range:not(.before) input:not(.single):checked ~ label:hover ~ label.prev,
+#Datepickk .dp-tables.range:not(.before) input:not(.single):checked ~ label:focus ~ label.prev {
   color: #ccc;
 }
-#Datepickk .d-tables.range:not(.before) input:not(.single):checked ~ input:checked + label {
+#Datepickk .dp-tables.range:not(.before) input:not(.single):checked ~ input:checked + label {
   color: white;
 }
-#Datepickk .d-tables.range:not(.before) input:not(.single):checked ~ input:checked + label:before {
+#Datepickk .dp-tables.range:not(.before) input:not(.single):checked ~ input:checked + label:before {
   transform: scaleX(1);
   background-color: #7DD076;
 }
-#Datepickk .d-tables.range:not(.before) input:not(.single):checked ~ input:checked + label ~ label {
+#Datepickk .dp-tables.range:not(.before) input:not(.single):checked ~ input:checked + label ~ label {
   color: inherit;
 }
-#Datepickk .d-tables.range:not(.before) input:not(.single):checked ~ input:checked + label ~ label.next,
-#Datepickk .d-tables.range:not(.before) input:not(.single):checked ~ input:checked + label ~ label.prev {
+#Datepickk .dp-tables.range:not(.before) input:not(.single):checked ~ input:checked + label ~ label.next,
+#Datepickk .dp-tables.range:not(.before) input:not(.single):checked ~ input:checked + label ~ label.prev {
   color: #ccc;
 }
-#Datepickk .d-tables.range:not(.before) input:not(.single):checked ~ input:checked + label ~ label:before {
+#Datepickk .dp-tables.range:not(.before) input:not(.single):checked ~ input:checked + label ~ label:before {
   transform: scaleX(0);
 }
-#Datepickk .d-tables.range.before input:not(.single):not(:checked) + label {
+#Datepickk .dp-tables.range.before input:not(.single):not(:checked) + label {
   color: white;
 }
-#Datepickk .d-tables.range.before input:not(.single):not(:checked) + label:before {
+#Datepickk .dp-tables.range.before input:not(.single):not(:checked) + label:before {
   transform: scaleX(1);
   background-color: rgba(233, 90, 126, 0.3);
 }
-#Datepickk .d-tables.range.before input:not(.single):checked + label ~ label {
+#Datepickk .dp-tables.range.before input:not(.single):checked + label ~ label {
   color: inherit;
 }
-#Datepickk .d-tables.range.before input:not(.single):checked + label ~ label.next,
-#Datepickk .d-tables.range.before input:not(.single):checked + label ~ label.prev {
+#Datepickk .dp-tables.range.before input:not(.single):checked + label ~ label.next,
+#Datepickk .dp-tables.range.before input:not(.single):checked + label ~ label.prev {
   color: #ccc;
 }
-#Datepickk .d-tables.range.before input:not(.single):checked + label ~ label:before {
+#Datepickk .dp-tables.range.before input:not(.single):checked + label ~ label:before {
   transform: scaleX(0);
 }
-#Datepickk .d-fadeInUp {
+#Datepickk .dp-fadeInUp {
   backface-visibility: visible !important;
   animation-name: DatepickfadeInUp;
   animation-duration: .5s;
@@ -610,10 +610,10 @@
     transform: none;
   }
 }
-.d-fadeInUp {
+.dp-fadeInUp {
   animation-name: DatepickfadeInUp;
 }
-#Datepickk.d-show > * {
+#Datepickk.dp-show > * {
   animation-name: DatepickkShow;
   animation-duration: .2s;
   animation-timing-function: ease-out;
