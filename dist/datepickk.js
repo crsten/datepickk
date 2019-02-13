@@ -1118,7 +1118,7 @@ function Datepickk(args) {
 		"tooltips": {
 			get: function get() {
 				var ret = [];
-				for (key in tooltips) {
+				for (var key in tooltips) {
 					ret.push({
 						date: new Date(parseInt(key)),
 						text: tooltips[key]
@@ -1138,7 +1138,7 @@ function Datepickk(args) {
 						tooltips[new Date(x.date.getFullYear(), x.date.getMonth(), x.date.getDate()).getTime()] = x.text;
 					}
 				} else if (!x) {
-					tooltips = [];
+					tooltips = {};
 				}
 				setDate();
 			}
