@@ -40,6 +40,11 @@ function Datepickk(args){
 			monthNames:['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'],
 			dayNames:['So','Mo','Di','Mi','Do','Fr','Sa'],
 			weekStart:1
+		},
+		ka: {
+			monthNames: ['იანვარი', 'თებერვალი', 'მარტი', 'აპრილი', 'მაისი', 'ივნისი', 'ივლისი', 'აგვისტო', 'სექტემბერი', 'ოქტომბერი', 'ნოემბერი', 'დეკემბერი'],
+			dayNames: ['კვ', 'ორშ', 'სამ', 'ოთხ', 'ხუთ', 'პარ', 'შაბ'],
+			weekStart: 1
 		}
 	};
 
