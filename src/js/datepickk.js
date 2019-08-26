@@ -32,14 +32,24 @@ function Datepickk(args){
 			weekStart:1
 		},
 		en: {
-			monthNames:['january','february','march','april','may','june','july','august','september','october','november','december'],
-			dayNames:['su','mo','tu','we','th','fr','sa'],
+			monthNames:['January','February','March','April','May','June','July','August','September','October','November','December'],
+			dayNames:['Su','Mo','Tu','We','Th','Fr','Sa'],
 			weekStart:0
 		},
 		de: {
 			monthNames:['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'],
 			dayNames:['So','Mo','Di','Mi','Do','Fr','Sa'],
 			weekStart:1
+		},
+		br: {
+			monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+			dayNames: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
+			weekStart:0
+		},
+		es: {
+			monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+			dayNames: ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'],
+			weekStart:0
 		}
 	};
 
@@ -242,7 +252,14 @@ function Datepickk(args){
 				startDay -= ws;
 			}
 			var monthText = languages[lang].monthNames[parseMonth(month - 1 + index)];
-			element.setAttribute('data-month',monthText);
+			element.setAttribute('data-month',monthText);			
+			element.setAttribute('data-month-year', new Date(year, month - 1 + index, 1).getFullYear());
+			element.setAttribute('data-month-num', parseMonth(month - 1 + index));
+			element.setAttribute('data-month-last-day', days);
+			element.setAttribute('data-month-first-day', 1);
+			if (minDate instanceof Date) {
+				element.setAttribute('data-month-first-day', minDate.getTime() >= new Date(year, month - 1 + index, 1).getTime() && minDate.getTime() <= new Date(year, month - 1 + index, days).getTime() ? minDate.getDate() + 1 : 1);
+			}
 
 			[].slice.call(element.querySelectorAll('.d-table input')).forEach(function(inputEl,i) {
 				var labelEl = inputEl.nextSibling;
@@ -461,40 +478,56 @@ function Datepickk(args){
 	};
 
 	function selectDate(date,ignoreOnSelect){
-		date = new Date(date);
-		date.setHours(0,0,0,0);
-		var el = that.el.querySelector('[data-date="'+ date.toJSON() +'"]');
+		if(date != '') {
+			date = new Date(date);
+			date.setHours(0,0,0,0);
+			var el = that.el.querySelector('[data-date="'+ date.toJSON() +'"]');
 
-		if(range && el && el.checked) {
-			el.classList.add('single');
-		}
+			if(range && el && el.checked) {
+				el.classList.add('single');
+			}
 
-		if(el && !el.checked){
-			el.checked = true;
-		}
+			if(el && !el.checked){
+				el.checked = true;
+			}
 
 
-		selectedDates.push(date);
+			selectedDates.push(date);
 
-		if(onSelect && !ignoreOnSelect){
-			onSelect.apply(date,[true]);
+			if(onSelect && !ignoreOnSelect){
+				onSelect.apply(date,[true]);
+			}
 		}
 	};
 
+	function selectDates(dates, ignoreOnSelect) {
+		dates.forEach((element) => {
+			selectDate(element, ignoreOnSelect);
+		});
+	};
+
 	function unselectDate(date,ignoreOnSelect){
-		date = new Date(date);
-		date.setHours(0,0,0,0);
-		var el = that.el.querySelector('[data-date="'+ date.toJSON() +'"]');
-		if(el){
-			el.classList.remove('single');
-			if(el.checked){el.checked = false;}
-		}
+		if(date != '') {
+			date = new Date(date);
+			date.setHours(0,0,0,0);
+			var el = that.el.querySelector('[data-date="'+ date.toJSON() +'"]');
+			if(el){
+				el.classList.remove('single');
+				if(el.checked){el.checked = false;}
+			}
 
-		selectedDates = selectedDates.filter(function(x){return x.getTime() != date.getTime()});
+			selectedDates = selectedDates.filter(function(x){return x.getTime() != date.getTime()});
 
-		if(onSelect && !ignoreOnSelect){
-			onSelect.call(date,false);
+			if(onSelect && !ignoreOnSelect){
+				onSelect.call(date,false);
+			}
 		}
+	};
+
+	function unselectDates(dates, ignoreOnSelect) {
+		dates.forEach((element) => {
+			unselectDate(element, ignoreOnSelect);
+		});
 	};
 
 	function unselectAll(ignoreOnSelect){
@@ -693,12 +726,15 @@ function Datepickk(args){
 	that.show = show;
 	that.hide = hide;
 	that.selectDate = selectDate;
+	that.selectDates = selectDates;
 	that.unselectAll = unselectAll;
 	that.unselectDate = unselectDate;
+	that.unselectDates = unselectDates;
 
 	function currentDateGetter(){
 		return new Date(currentYear,currentMonth-1,1);
 	}
+
 	function currentDateSetter(x){
 		x = new Date(x);
 		currentMonth = x.getMonth() + 1;
@@ -761,6 +797,33 @@ function Datepickk(args){
 				}
 			}
 		},
+		"languages": {
+			get: function get() {
+				return languages[lang];
+			}
+		},
+		"firstDateCalendar": {
+			get: function get() {
+				var monthNodes = document.querySelectorAll('.d-table');
+				var firstMonth = monthNodes[0];
+				var year = firstMonth.getAttribute('data-month-year');
+				var month = firstMonth.getAttribute('data-month-num');
+				var day = firstMonth.getAttribute('data-month-first-day');
+
+				return new Date(year, month, day);
+			}
+		},
+		"lastDateCalendar": {
+			get: function get() {
+				var monthNodes = document.querySelectorAll('.d-table');
+				var lastMonth = monthNodes[monthNodes.length - 1];
+				var year = lastMonth.getAttribute('data-month-year');
+				var month = lastMonth.getAttribute('data-month-num');
+				var day = lastMonth.getAttribute('data-month-last-day');
+
+				return new Date(year, month, day);
+			}
+		},
 		"weekStart": {
 			get: function(){
 				return (weekStart !== null) ? weekStart : languages[lang].weekStart;
@@ -792,7 +855,7 @@ function Datepickk(args){
 						that.el.classList.add('multi');
 					}
 				}else{
-					console.error('months must be a number > 0');
+					console.error('Months must be a number > 0');
 				}
 			}
 		},
