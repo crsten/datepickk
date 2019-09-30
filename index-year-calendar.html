@@ -200,6 +200,11 @@
                 console.log('Inicializando Datepickk');
                 console.log('Data Minima:' + $minDate);
                 console.log('Data Maxima:' + $maxDate);
+
+                let disabledDays = [];
+                for(let auxDate = new Date(); new Date($minDate).getTime() <= auxDate.getTime(); auxDate = moment(auxDate).subtract(1, 'days').toDate()){
+                    disabledDays[disabledDays.length] = auxDate;
+                }
                 
                 var datepicker = new Datepickk();
                 datepicker.inline = true;
@@ -207,6 +212,7 @@
                 datepicker.container = document.querySelector('.datepickk-container');
                 datepicker.minDate = $minDate;
                 datepicker.maxDate = $maxDate;
+                datepicker.disabledDates = disabledDays;
                 datepicker.selectDates($inputArray);
                 datepicker.onSelect = (checked) => {
                     var dateRange = [];
