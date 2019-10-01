@@ -40,6 +40,16 @@
                 border-bottom: 1px solid rgba(0, 0, 0, 0.05);
             }
 
+            .datepickk-container button {
+                background: #e95a5a;
+                cursor: pointer;
+                border: none;
+            }
+
+            .datepickk-container button:active {
+                background-color: #d61010;
+            }
+
             #Datepickk .select-all{
                 display: block !important;
                 position: absolute;
@@ -47,8 +57,7 @@
                 left: 5px;
                 width: 15px;
                 height: 15px;
-                background: yellowgreen;
-                cursor: pointer;
+                border-radius: 10px;
             }
 
             .datepickk-container .datepickk-header .datepickk-nav {
@@ -64,36 +73,42 @@
             }
 
             .datepickk-container .datepickk-header .btn-datepickk {
-                background-color: #e95a5a;
                 background-image: none;
                 font-family: inherit;
                 color: #FFFFFF;
-                display: inline-block;                
-                border: none;
-                cursor: pointer;
+                display: inline-block;
                 width: 40px;
                 height: 30px;
             }
 
-            .datepickk-container .datepickk-header .btn-datepickk:active {
-                background-color: #d61010;
+            /*Custom*/
+            .datepickk-container .d-month, .datepickk-container .d-year {
+                pointer-events: none !important;
+            }
+
+            .datepickk-container .d-header{
+                background-color: #00263c !important;
+            }
+
+            .datepickk-container .d-week{
+                background-color: #757575 !important;
             }
         </style>
         
         <input type="text" id="fldAnalysisSchedule" value="2019/09/10,2019/10/1"/>
         <div class="datepickk-container"></div>
 
-        <script>            
+        <script>
             var checkEvent = (datepicker, element, dateRange) => {
                 // Funcionalidade parecida com um checkbox
-                if(element.attr("data-checked") === 'true'){                    
+                if(element.attr("data-checked") === 'true'){
                     datepicker.unselectDates(dateRange);
                     element.attr('data-checked', false);
                 } else {
                     datepicker.selectDates(dateRange);
                     element.attr('data-checked', true);
                 }
-            }                    
+            }
 
             var bindEventSelectAll = (datepicker) => {
                 // Adiciona o evento de seleção de todos os dias do mês
@@ -118,7 +133,7 @@
                 // Adiciona os checkbox de seleção de mês
                 $('.d-table').each(function(index, element) {
                     $(element).prepend($('<button data-checked="false" class="select-all"></button>'));
-                });				            
+                });
                 bindEventSelectAll(datepicker);
             }
 
@@ -137,7 +152,7 @@
                     var dateRange = [];
                     var dataAux = startOfYear;
 
-                    while(dataAux.getTime() <= endOfYear.getTime()){                    
+                    while(dataAux.getTime() <= endOfYear.getTime()){
                         if(dataAux.getDay() == $(this).data('weekday')){
                             dateRange.push(dataAux);
                         }
@@ -213,7 +228,7 @@
                 datepicker.minDate = $minDate;
                 datepicker.maxDate = $maxDate;
                 datepicker.disabledDates = disabledDays;
-                datepicker.selectDates($inputArray);
+                datepicker.selectDates($inputArray, false, true);
                 datepicker.onSelect = (checked) => {
                     var dateRange = [];
                     datepicker.selectedDates.forEach((element, index) => {

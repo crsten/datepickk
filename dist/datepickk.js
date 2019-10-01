@@ -313,6 +313,11 @@ function Datepickk(args) {
 		return month;
 	}
 
+	function isDisabledDate(date) {
+		var dateToVerify = date instanceof Date ? date : new Date(date);
+		return disabledDates.indexOf(dateToVerify.getTime()) != -1 || disabledDays.indexOf(dateToVerify.getDay()) != -1;
+	}
+
 	function generateDates(year, month) {
 		var monthElements = that.el.querySelectorAll('.d-table');
 		var ws = weekStart !== null ? weekStart : languages[lang].weekStart;
@@ -377,7 +382,7 @@ function Datepickk(args) {
 				if (date instanceof Date) {
 					inputEl.setAttribute('data-date', date.toJSON());
 
-					if (disabledDates.indexOf(date.getTime()) != -1 || disabledDays.indexOf(date.getDay()) != -1) {
+					if (isDisabledDate(date)) {
 						inputEl.setAttribute('disabled', true);
 					}
 
@@ -556,8 +561,8 @@ function Datepickk(args) {
 		setDate();
 	};
 
-	function selectDate(date, ignoreOnSelect) {
-		if (date != '') {
+	function selectDate(date, ignoreOnSelect, ignoreDisabled) {
+		if (date != '' && (ignoreDisabled || !isDisabledDate(date))) {
 			date = new Date(date);
 			date.setHours(0, 0, 0, 0);
 			var el = that.el.querySelector('[data-date="' + date.toJSON() + '"]');
@@ -578,14 +583,14 @@ function Datepickk(args) {
 		}
 	};
 
-	function selectDates(dates, ignoreOnSelect) {
+	function selectDates(dates, ignoreOnSelect, ignoreDisabled) {
 		dates.forEach(function (element) {
-			selectDate(element, ignoreOnSelect);
+			selectDate(element, ignoreOnSelect, ignoreDisabled);
 		});
 	};
 
-	function unselectDate(date, ignoreOnSelect) {
-		if (date != '') {
+	function unselectDate(date, ignoreOnSelect, ignoreDisabled) {
+		if (date != '' && (ignoreDisabled || !isDisabledDate(date))) {
 			date = new Date(date);
 			date.setHours(0, 0, 0, 0);
 			var el = that.el.querySelector('[data-date="' + date.toJSON() + '"]');
@@ -606,15 +611,15 @@ function Datepickk(args) {
 		}
 	};
 
-	function unselectDates(dates, ignoreOnSelect) {
+	function unselectDates(dates, ignoreOnSelect, ignoreDisabled) {
 		dates.forEach(function (element) {
-			unselectDate(element, ignoreOnSelect);
+			unselectDate(element, ignoreOnSelect, ignoreDisabled);
 		});
 	};
 
-	function unselectAll(ignoreOnSelect) {
+	function unselectAll(ignoreOnSelect, ignoreDisabled) {
 		selectedDates.forEach(function (date) {
-			unselectDate(date, ignoreOnSelect);
+			unselectDate(date, ignoreOnSelect, ignoreDisabled);
 		});
 	};
 
