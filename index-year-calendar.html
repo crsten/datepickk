@@ -29,7 +29,7 @@
             .datepickk-container .d-table .d-hidden{
                 visibility: hidden;
             }
-            
+
             .datepickk-container .d-calendar{
                 font-size: 15px !important;
             }
@@ -93,9 +93,13 @@
             .datepickk-container .d-week{
                 background-color: #757575 !important;
             }
+
+            .datepickk-container .d-table input + label:before {
+                background-color: #0c99ea !important;
+            }
         </style>
         
-        <input type="text" id="fldAnalysisSchedule" value="2019/09/10,2019/10/1"/>
+        <input type="text" id="fldAnalysisSchedule" value=""/>
         <div class="datepickk-container"></div>
 
         <script>
@@ -115,16 +119,16 @@
                 unbindEventSelectAll();
                 $('.select-all').click(function(e) {
                     e.preventDefault();
-                    var monthYear = $(this).parent().attr('data-month-year');
+                    var monthYear = parseInt($(this).parent().attr('data-month-year'));
                     var monthNum = parseInt($(this).parent().attr('data-month-num')) + 1;
-                    var firstDayOnMonth = $(this).parent().attr('data-month-first-day');
-                    var lastDayOnMonth = $(this).parent().attr('data-month-last-day');
+                    var firstDayOnMonth = parseInt($(this).parent().attr('data-month-first-day'));
+                    var lastDayOnMonth = parseInt($(this).parent().attr('data-month-last-day'));
                     var dateRange = [];
-                    
+
                     for(var day = firstDayOnMonth; day <= lastDayOnMonth; day ++) {
                         dateRange.push(monthYear + '/' + monthNum + '/' + day);
                     }
-
+                        
                     checkEvent(datepicker, $(this), dateRange);
                 });
             }
@@ -149,14 +153,15 @@
                     e.preventDefault();
                     var startOfYear = datepicker.firstDateCalendar;
                     var endOfYear = datepicker.lastDateCalendar;
+                    var clickedDay = parseInt($(this).data('weekday'));
                     var dateRange = [];
                     var dataAux = startOfYear;
 
                     while(dataAux.getTime() <= endOfYear.getTime()){
-                        if(dataAux.getDay() == $(this).data('weekday')){
-                            dateRange.push(dataAux);
+                        if(dataAux.getDay() === clickedDay) {
+                            dateRange.push(dataAux);                            
                         }
-                        dataAux = moment(dataAux).add(1, 'd').toDate();
+                        dataAux = moment(dataAux).add(1, 'd').startOf('day').toDate();
                     }
                     
                     checkEvent(datepicker, $(this), dateRange);
@@ -204,14 +209,15 @@
             }
 
             var defineCalendar = (lang) => {
-                 // Monta e mostra o calendário no idioma (lang) passado
+                // Monta e mostra o calendário no idioma (lang) passado
                 let $input = $('[id$=fldAnalysisSchedule]');
                 let $inputArray = $input.val().split(',');
                 let $defaultMinDate = new Date();
-                let = $defaultMaxDate = moment($defaultMinDate).add(11, 'months').add(5, 'years').toDate();	
+                let = $defaultMaxDate = moment($defaultMinDate).add(-1, 'months').add(5, 'years').startOf('day').toDate();	
                 
                 let $minDate = $inputArray.length > 0 ? (new Date($inputArray[0]).getTime() < new Date().getTime() ? $inputArray[0] : new Date()) : new Date();
                 let $maxDate = $inputArray.length > 0 ? (new Date($inputArray[$inputArray.length+1]).getTime() > $defaultMaxDate.getTime() ? $inputArray[$inputArray.length+1] : $defaultMaxDate) : $defaultMaxDate;
+                
                 console.log('Inicializando Datepickk');
                 console.log('Data Minima:' + $minDate);
                 console.log('Data Maxima:' + $maxDate);

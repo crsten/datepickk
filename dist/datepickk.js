@@ -463,14 +463,12 @@ function Datepickk(args) {
 			}
 		}
 
-		if (maxDate && new Date(currentYear, currentMonth - 1 + months - 1, 1) >= new Date(maxDate).setDate(1)) {
-			currentYear = maxDate.getFullYear();
-			currentMonth = maxDate.getMonth() + 1 - months + 1;
+		if (maxDate && new Date(currentYear, currentMonth - 1 + months - 1, 1).getTime() >= new Date(new Date(maxDate).setDate(1)).getTime()) {
 			that.el.header.childNodes[2].setAttribute('style', 'visibility:hidden');
 		} else {
 			that.el.header.childNodes[2].removeAttribute('style');
 		}
-		if (minDate && new Date(currentYear, currentMonth - 1, 1) <= new Date(minDate).setDate(1)) {
+		if (minDate && new Date(currentYear, currentMonth - 1, 1).getTime() <= new Date(new Date(minDate).setDate(1)).getTime()) {
 			currentYear = minDate.getFullYear();
 			currentMonth = minDate.getMonth() + 1;
 			that.el.header.childNodes[0].setAttribute('style', 'visibility:hidden');
