@@ -114,6 +114,17 @@ function Datepickk(args) {
 		en: {
 			monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
 			dayNames: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+			dayNamesFull: ['Sundays', 'Mondays', 'Tuesdays', 'Wednesdays', 'Thursdays', 'Fridays', 'Saturdays'],
+			labels: {
+				clone: 'Clone multiple selection actions for all years',
+				clean: 'Clean Calendar',
+				selectWeekday: function selectWeekday(dayWeek) {
+					return 'Select all ' + languages['en'].dayNamesFull[dayWeek];
+				},
+				selectMonth: function selectMonth(month) {
+					return 'Select all days of the month of ' + languages['en'].monthNames[month];
+				}
+			},
 			weekStart: 0
 		},
 		de: {
@@ -124,11 +135,33 @@ function Datepickk(args) {
 		br: {
 			monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
 			dayNames: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
+			dayNamesFull: ['Domingos', 'Segundas', 'Terças', 'Quartas', 'Quintas', 'Sextas', 'Sábados'],
+			labels: {
+				clone: 'Clonar ações de seleção multipla para todos anos',
+				clean: 'Limpar Calendário',
+				selectWeekday: function selectWeekday(dayWeek) {
+					return 'Seleciona todos os(as) ' + languages['br'].dayNamesFull[dayWeek];
+				},
+				selectMonth: function selectMonth(month) {
+					return 'Seleciona todos os dias do mês de ' + languages['br'].monthNames[month];
+				}
+			},
 			weekStart: 0
 		},
 		es: {
 			monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
 			dayNames: ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'],
+			dayNamesFull: ['Domingos', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábados'],
+			labels: {
+				clone: 'Clonar acciones de selección múltiple para todos los años',
+				clean: 'Limpiar Calendario',
+				selectWeekday: function selectWeekday(dayWeek) {
+					return 'Seleccionar todos los(as) ' + languages['es'].dayNamesFull[dayWeek];
+				},
+				selectMonth: function selectMonth(month) {
+					return 'Selecciona todos los días del mes de ' + languages['es'].monthNames[month];
+				}
+			},
 			weekStart: 0
 		}
 	};

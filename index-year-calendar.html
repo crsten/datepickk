@@ -4,7 +4,8 @@
         <title>Teste</title>
         <meta charset="utf-8" />
         <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
-        <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>        
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" /> 
         <link rel="stylesheet" type="text/css" href="dist/datepickk.css" />
         <script type="text/javascript" src="dist/datepickk.js"></script>
     </head>
@@ -41,9 +42,13 @@
             }
 
             .datepickk-container button {
-                background: #e95a5a;
+                background-color: #e95a5a;
                 cursor: pointer;
                 border: none;
+            }
+
+            .datepickk-container button[data-checked=true] {
+                background-color: #d61010;
             }
 
             .datepickk-container button:active {
@@ -106,59 +111,76 @@
             var checkEvent = (datepicker, element, dateRange) => {
                 // Funcionalidade parecida com um checkbox
                 if(element.attr("data-checked") === 'true'){
-                    datepicker.unselectDates(dateRange);
+                    if(dateRange) {
+                        datepicker.unselectDates(dateRange);
+                    }
                     element.attr('data-checked', false);
                 } else {
-                    datepicker.selectDates(dateRange);
+                    if(dateRange) {
+                        datepicker.selectDates(dateRange);
+                    }
                     element.attr('data-checked', true);
                 }
             }
 
-            var bindEventSelectAll = (datepicker) => {
+            var unbindEventMonthSelectAll = () => {
+                // Remove select-all
+                $('.select-all').off('click').attr('data-checked',false);
+            }
+
+            var bindEventMonthSelectAll = (datepicker) => {
                 // Adiciona o evento de seleção de todos os dias do mês
-                unbindEventSelectAll();
+                unbindEventMonthSelectAll();
                 $('.select-all').click(function(e) {
                     e.preventDefault();
-                    var monthYear = parseInt($(this).parent().attr('data-month-year'));
-                    var monthNum = parseInt($(this).parent().attr('data-month-num')) + 1;
-                    var firstDayOnMonth = parseInt($(this).parent().attr('data-month-first-day'));
-                    var lastDayOnMonth = parseInt($(this).parent().attr('data-month-last-day'));
+
+                    var startOfCalendar = datepicker.minDate;
+                    var endOfCalendar = $('.btn-clone').attr('data-checked') === 'true'? datepicker.maxDate : datepicker.lastDateCalendar;
+                    var month = parseInt($(this).parent().attr('data-month-num'));
                     var dateRange = [];
 
-                    for(var day = firstDayOnMonth; day <= lastDayOnMonth; day ++) {
-                        dateRange.push(monthYear + '/' + monthNum + '/' + day);
+                    for(var year = datepicker.minDate.getFullYear(); year <= datepicker.maxDate.getFullYear(); year++) {
+                        var firstDayOnMonth = 1;
+                        var lastDayOnMonth = new Date(year, (month + 1), 0).getDate();
+
+                        for(var day = firstDayOnMonth; day <= lastDayOnMonth; day ++) {
+                            dateToSelect = new Date(year, month, day);
+                            if(dateToSelect.getTime() <= endOfCalendar.getTime()) {
+                                dateRange.push(dateToSelect);
+                            }                            
+                        }
                     }
                         
                     checkEvent(datepicker, $(this), dateRange);
                 });
             }
 
-            var addSelectAll = (datepicker) => {
+            var addMonthSelectAll = (datepicker) => {
                 // Adiciona os checkbox de seleção de mês
                 $('.d-table').each(function(index, element) {
-                    $(element).prepend($('<button data-checked="false" class="select-all"></button>'));
+                    $(element).prepend($('<button data-checked="false" title="'+datepicker.languages.labels.selectMonth($(element).attr('data-month-num'))+'" class="select-all"></button>'));
                 });
-                bindEventSelectAll(datepicker);
+                bindEventMonthSelectAll(datepicker);
             }
 
-            var unbindEventSelectAll = () => {
-                // Remove select-all
-                $('.select-all').off('click').attr('data-checked',false);
+            var unbindEventWeekDaysSelectAll = () => {
+                // Cria uma header com ações em cima do calendário
+                $('.nav-weekdays .btn-datepickk').off('click').attr('data-checked',false);
             }
 
-            var bindEventWeekDays = (datepicker) => {
+            var bindEventWeekDaysSelectAll = (datepicker) => {
                 // Adiciona o evento de seleção de dia de semana
-                removeEventWeekDays();
+                unbindEventWeekDaysSelectAll();
                 $('.nav-weekdays .btn-datepickk').click(function(e) {
                     e.preventDefault();
-                    var startOfYear = datepicker.firstDateCalendar;
-                    var endOfYear = datepicker.lastDateCalendar;
+                    var startOfCalendar = datepicker.minDate;
+                    var endOfCalendar = $('.btn-clone').attr('data-checked') === 'true'? datepicker.maxDate : datepicker.lastDateCalendar;
                     var clickedDay = parseInt($(this).data('weekday'));
                     var dateRange = [];
-                    var dataAux = startOfYear;
+                    var dataAux = startOfCalendar;
 
-                    while(dataAux.getTime() <= endOfYear.getTime()){
-                        if(dataAux.getDay() === clickedDay) {
+                    while(dataAux.getTime() <= endOfCalendar.getTime()){
+                        if(dataAux.getDay() === clickedDay && dataAux.getTime() > new Date().getTime()) {
                             dateRange.push(dataAux);                            
                         }
                         dataAux = moment(dataAux).add(1, 'd').startOf('day').toDate();
@@ -168,44 +190,75 @@
                 });
             }
 
-            var addWeekDays = (datepicker) => {
+            var bindEventClean = (datepicker) => {
+                // Adiciona o evento dos botões de ações
+                $('.nav-actions .btn-clean').click(function(e) {
+                    e.preventDefault();
+
+                    if($('.btn-clone').attr('data-checked') === 'true') {
+                        datepicker.unselectAll();
+                    } else {
+                        var startOfCalendar = datepicker.minDate;
+                        var endOfCalendar = datepicker.lastDateCalendar;
+                        var dateRange = [];
+                        var dataAux = startOfCalendar;
+                        
+                        while(dataAux.getTime() <= endOfCalendar.getTime()){
+                            dateRange.push(dataAux);
+                            dataAux = moment(dataAux).add(1, 'd').startOf('day').toDate();
+                        }
+
+                        datepicker.unselectDates(dateRange);
+                    }
+                })
+            }
+
+            var addWeekDaysSelectAll = (datepicker) => {
                 // Adiciona os botões de dias da semana ao plugin
                 $('.datepickk-header').prepend($('<div class="datepickk-nav nav-weekdays"></div>'));
                 
                 var weekdayAux = datepicker.languages.weekStart;
-                datepicker.languages.dayNames.forEach(function(element) {
-                    $('.nav-weekdays').append('<button class="btn-datepickk" data-checked="false" data-weekday="' + weekdayAux + '">' + element + '</button>');
+                datepicker.languages.dayNames.forEach(function(element, index) {
+                    $('.nav-weekdays').append('<button class="btn-datepickk btn-weekday" title="'+datepicker.languages.labels.selectWeekday(index)+'"  data-checked="false" data-weekday="' + weekdayAux + '">' + element + '</button>');
                     weekdayAux = weekdayAux + 1;
                 })
                 
-                bindEventWeekDays(datepicker);
-            }
-
-            var bindEventActions = (datepicker) =>{
-                // Adiciona o evento dos botões de ações
-                $('.nav-actions .btn-datepickk').click(function(e) {
-                    e.preventDefault();
-                    datepicker.unselectAll();
-                })
-            }
-
-            var addActions = (datepicker) => {
-                // Adiciona os botões de dias da semana ao plugin
-                $('.datepickk-header').append($('<div class="datepickk-nav nav-actions"></div>'));
-                $('.nav-actions').append('<button class="btn-datepickk"> X </button>');                
-                
-                bindEventActions(datepicker);
-            }
-            var removeEventWeekDays = () => {
-                // Cria uma header com ações em cima do calendário
-                $('.nav-weekdays .btn-datepickk').off('click').attr('data-checked',false);
+                bindEventWeekDaysSelectAll(datepicker);
             }
 
             var addNavBar = (datepicker) => {
                 // Cria uma header com ações em cima do calendário
-                $('.datepickk-container').prepend($('<div class="datepickk-header"></div>'));
-                addWeekDays(datepicker);
+                $('.datepickk-container').prepend($('<div class="datepickk-header"></div>'));                
                 addActions(datepicker);
+            }
+
+            var unbindEventClone = () => {
+                $('.btn-clone').off('click');
+            }
+
+            var bindEventClone = (datepicker) => {
+                // Adiciona o evento de clonagem
+                unbindEventClone();
+                $('.btn-clone').click(function(e) {
+                    e.preventDefault();
+                    checkEvent(datepicker, $(this));
+                })                
+            }
+
+            var bindEventActions = (datepicker) => {
+                bindEventClone(datepicker);
+                bindEventClean(datepicker);
+                bindEventMonthSelectAll(datepicker);
+                bindEventWeekDaysSelectAll(datepicker);
+            }
+            
+            var addActions = (datepicker) => {
+                // Adiciona os botões de dias da semana ao plugin
+                $('.datepickk-header').append($('<div class="datepickk-nav nav-actions"></div>'));
+                $('.nav-actions').append('<button class="btn-datepickk btn-clone" title="'+ datepicker.languages.labels.clone +'"><i class="fas fa-clone"></i></button>');
+                $('.nav-actions').append('<button class="btn-datepickk btn-clean" title="'+ datepicker.languages.labels.clean +'"><i class="fas fa-calendar-times"></i></button>');
+                addWeekDaysSelectAll(datepicker);
+                bindEventActions(datepicker);
             }
 
             var defineCalendar = (lang) => {
@@ -213,7 +266,7 @@
                 let $input = $('[id$=fldAnalysisSchedule]');
                 let $inputArray = $input.val().split(',');
                 let $defaultMinDate = new Date();
-                let = $defaultMaxDate = moment($defaultMinDate).add(-1, 'months').add(5, 'years').startOf('day').toDate();	
+                let = $defaultMaxDate = moment($defaultMinDate).add(5, 'years').startOf('day').toDate();	
                 
                 let $minDate = $inputArray.length > 0 ? (new Date($inputArray[0]).getTime() < new Date().getTime() ? $inputArray[0] : new Date()) : new Date();
                 let $maxDate = $inputArray.length > 0 ? (new Date($inputArray[$inputArray.length+1]).getTime() > $defaultMaxDate.getTime() ? $inputArray[$inputArray.length+1] : $defaultMaxDate) : $defaultMaxDate;
@@ -243,12 +296,11 @@
                     $input.val(dateRange.join(','));
                 };
                 datepicker.onNavigation = () => {
-                    bindEventSelectAll(datepicker);
-                    bindEventWeekDays(datepicker);
+                    bindEventClone(datepicker);
                 };
                 datepicker.lang = lang;                
                 datepicker.show();
-                addSelectAll(datepicker);
+                addMonthSelectAll(datepicker);
                 addNavBar(datepicker);
             }
 
