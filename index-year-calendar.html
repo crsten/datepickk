@@ -47,7 +47,7 @@
                 border: none;
             }
 
-            .datepickk-container button[data-checked=true] {
+            .datepickk-container .btn-clone[data-checked=true] {
                 background-color: #d61010;
             }
 
@@ -140,7 +140,7 @@
                     var dateRange = [];
 
                     for(var year = datepicker.minDate.getFullYear(); year <= datepicker.maxDate.getFullYear(); year++) {
-                        var firstDayOnMonth = 1;
+                        var firstDayOnMonth = new Date(year, (month), 1).getTime() <= startOfCalendar.getTime() ? startOfCalendar.getDate() : 1;
                         var lastDayOnMonth = new Date(year, (month + 1), 0).getDate();
 
                         for(var day = firstDayOnMonth; day <= lastDayOnMonth; day ++) {
