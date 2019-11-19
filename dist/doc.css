@@ -1,4 +1,4 @@
-/*Flex grid*/
+@import url(http://fonts.googleapis.com/css?family=Raleway:400,100,200,300);@import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css);/*Flex grid*/
 .container {
   padding: 7.5px;
 }
@@ -1015,7 +1015,6 @@ ul li:before {
 }
 .nav h1 {
   color: #222;
-  width: auto;
   display: inline;
 }
 .nav h1 span {
